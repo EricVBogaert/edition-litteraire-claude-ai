@@ -2,4 +2,4 @@
 Guide méthodologique pour l'édition littéraire assistée par Claude.ai avec Obsidian et VS Code
 
 
-en cours de deploiment
+en cours de déploiement
