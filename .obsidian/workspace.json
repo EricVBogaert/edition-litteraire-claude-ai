@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "4b3fd0d44773bf63",
+        "id": "560bde3cffb5fe3d",
         "type": "tabs",
         "children": [
           {
-            "id": "13cdda630752d7af",
+            "id": "54d35b3b9d0446a0",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/guide-complet.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "guide-complet"
+              "title": "Nouvel onglet"
             }
           }
         ]
@@ -94,7 +90,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/guide-complet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +99,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour guide-complet"
+              "title": "Rétroliens"
             }
           },
           {
@@ -113,12 +108,11 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/guide-complet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de guide-complet"
+              "title": "Liens sortants"
             }
           },
           {
@@ -142,13 +136,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/guide-complet.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan de guide-complet"
+              "title": "Plan"
             }
           }
         ]
@@ -169,11 +162,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "13cdda630752d7af",
+  "active": "54d35b3b9d0446a0",
   "lastOpenFiles": [
-    "docs/ressources-externes.md",
-    "docs/guide-complet.md",
     "README.md",
+    "docs/guide-complet.md",
+    "docs/ressources-externes.md",
     "outil/ed02-vscode.md",
     "outil",
     "docs/directive-utilisation-claude.md",
