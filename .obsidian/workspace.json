@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "560bde3cffb5fe3d",
+        "id": "6638e6b0a82072fc",
         "type": "tabs",
         "children": [
           {
-            "id": "54d35b3b9d0446a0",
+            "id": "225e33ff4adaacc9",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "docs/directive-utilisation-claude.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "directive-utilisation-claude"
             }
           }
         ]
@@ -162,14 +166,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "54d35b3b9d0446a0",
+  "active": "225e33ff4adaacc9",
   "lastOpenFiles": [
+    "docs/directive-utilisation-claude.md",
     "README.md",
     "docs/guide-complet.md",
     "docs/ressources-externes.md",
     "outil/ed02-vscode.md",
     "outil",
-    "docs/directive-utilisation-claude.md",
     "templates/roman",
     "templates/poesie",
     "templates/essai",
