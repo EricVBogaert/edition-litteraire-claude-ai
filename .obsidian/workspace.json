@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/guide-complet.md",
+                "file": "docs/ressources-externes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "guide-complet"
+              "title": "ressources-externes"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "docs/guide-complet.md",
+                "file": "docs/ressources-externes.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour guide-complet"
+              "title": "Rétrolien pour ressources-externes"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "docs/guide-complet.md",
+                "file": "docs/ressources-externes.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de guide-complet"
+              "title": "Liens sortants de ressources-externes"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "docs/guide-complet.md",
+                "file": "docs/ressources-externes.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan de guide-complet"
+              "title": "Plan de ressources-externes"
             }
           }
         ]
@@ -171,8 +171,10 @@
   },
   "active": "13cdda630752d7af",
   "lastOpenFiles": [
-    "README.md",
     "docs/guide-complet.md",
+    "README.md",
+    "outil/ed02-vscode.md",
+    "outil",
     "docs/directive-utilisation-claude.md",
     "templates/roman",
     "templates/poesie",
@@ -187,7 +189,6 @@
     "ressources/bibliographie",
     "ressources/cheat-sheets",
     "ressources",
-    "outils/scripts/python/compile.py",
     "modules-avances/integration-grammalecte/README.md",
     "modules-avances/analyse-stylistique/README.md",
     "guides-demarrage/quick-start-windows.md",
@@ -205,7 +206,6 @@
     "edition-litteraire-claude-ai/ressources/cheat-sheets/git-commands.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/obsidian-shortcuts.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/claude-ai-prompts.md",
-    "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/README.md",
-    "edition-litteraire-claude-ai/modules-avances/integration-grammalecte/README.md"
+    "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/README.md"
   ]
 }
