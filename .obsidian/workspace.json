@@ -165,9 +165,39 @@
       "canvas:Créer une nouvelle toile": false,
       "daily-notes:Ouvrir la note quotidienne": false,
       "templates:Insérer le modèle": false,
-      "command-palette:Ouvrir la palette de commandes": false
+      "command-palette:Ouvrir la palette de commandes": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "13cdda630752d7af",
-  "lastOpenFiles": []
+  "lastOpenFiles": [
+    "edition-litteraire-claude-ai/ressources/bibliographie",
+    "edition-litteraire-claude-ai/ressources/cheat-sheets/markdown-guide.md",
+    "edition-litteraire-claude-ai/ressources/cheat-sheets/git-commands.md",
+    "edition-litteraire-claude-ai/ressources/cheat-sheets/obsidian-shortcuts.md",
+    "edition-litteraire-claude-ai/ressources/cheat-sheets/claude-ai-prompts.md",
+    "edition-litteraire-claude-ai/ressources/cheat-sheets",
+    "edition-litteraire-claude-ai/ressources/images",
+    "edition-litteraire-claude-ai/ressources",
+    "edition-litteraire-claude-ai/modules-avances/export-formats/web",
+    "edition-litteraire-claude-ai/modules-avances/export-formats/latex",
+    "edition-litteraire-claude-ai/modules-avances/export-formats/indesign",
+    "edition-litteraire-claude-ai/modules-avances/export-formats",
+    "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/README.md",
+    "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/src",
+    "edition-litteraire-claude-ai/modules-avances/analyse-stylistique",
+    "edition-litteraire-claude-ai/modules-avances/integration-grammalecte/setup.py",
+    "edition-litteraire-claude-ai/modules-avances/integration-grammalecte/README.md",
+    "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux-avance.md",
+    "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux.md",
+    "edition-litteraire-claude-ai/guides-demarrage/quick-start-mac.md",
+    "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
+    "edition-litteraire-claude-ai/docs/ressources-externes.md",
+    "edition-litteraire-claude-ai/docs/glossaire.md",
+    "edition-litteraire-claude-ai/docs/faq.md",
+    "edition-litteraire-claude-ai/docs/conceptes-cles.md",
+    "edition-litteraire-claude-ai/docs/guide-complet.md",
+    "edition-litteraire-claude-ai/CONTRIBUTING.md",
+    "edition-litteraire-claude-ai/README.md"
+  ]
 }
