@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "docs/faq.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "faq"
             }
           }
         ]
@@ -169,8 +169,8 @@
   },
   "active": "225e33ff4adaacc9",
   "lastOpenFiles": [
-    "guides-demarrage/quick-start-windows.md",
     "index.md",
+    "guides-demarrage/quick-start-windows.md",
     "docs/directive-utilisation-claude.md",
     "README.md",
     "docs/guide-complet.md",
