@@ -1,28 +1,28 @@
-# DIRECTIVE D'UTILISATION DU GUIDE AVEC CLAUDE.AI
+# DIRECTIVE D'UTILISATION DU GUIDE AVEC CLAUDE
 
 ## 1. Introduction et objectif
 
-Ce guide méthodologique a été conçu pour être utilisé en collaboration active avec Claude.ai. Il établit un cadre de travail qui combine l'intelligence artificielle, la gestion de connaissances structurée et les outils modernes d'édition. Pour tirer pleinement parti de cette méthodologie, il est essentiel de comprendre comment faciliter l'interaction entre Claude.ai et ce document.
+Ce guide méthodologique a été conçu pour être utilisé en collaboration active avec Claude. Il établit un cadre de travail qui combine l'intelligence artificielle, la gestion de connaissances structurée et les outils modernes d'édition. Pour tirer pleinement parti de cette méthodologie, il est essentiel de comprendre comment faciliter l'interaction entre Claude et ce document.
 
-## 2. Pour l'utilisateur : Comment présenter ce guide à Claude.ai
+## 2. Pour l'utilisateur : Comment présenter ce guide à Claude
 
 ### 2.1. Préparation de la session
 
-Avant de commencer à travailler avec Claude.ai sur votre projet littéraire, prenez le temps de vous familiariser avec la structure générale du guide. Identifiez les sections qui correspondent à votre étape actuelle dans le processus d'écriture ou d'édition. Cette préparation vous permettra d'orienter efficacement vos échanges avec Claude.ai.
+Avant de commencer à travailler avec Claude sur votre projet littéraire, prenez le temps de vous familiariser avec la structure générale du guide. Identifiez les sections qui correspondent à votre étape actuelle dans le processus d'écriture ou d'édition. Cette préparation vous permettra d'orienter efficacement vos échanges avec Claude.
 
 ### 2.2. Méthodes d'importation du guide
 
-Vous disposez de plusieurs options pour partager ce guide avec Claude.ai :
+Vous disposez de plusieurs options pour partager ce guide avec Claude :
 
 #### 2.2.1. Importation complète
 
-Lors de votre première session, importez l'intégralité du document `guide-complet.md` dans Claude.ai. Cette approche permet à Claude de comprendre le contexte global de votre démarche.
+Lors de votre première session, importez l'intégralité du document `guide-complet.md` dans Claude. Cette approche permet à Claude de comprendre le contexte global de votre démarche.
 
 _Exemple de prompt initial_ : "J'ai importé un guide méthodologique pour l'édition littéraire assistée par IA. Pourrais-tu analyser ce document et m'aider à l'utiliser pour mon projet de [type de projet] ?"
 
 #### 2.2.2. Importation par sections
 
-Pour les sessions ultérieures, importez uniquement les sections pertinentes à votre travail du jour. Cela permet de focaliser l'attention de Claude.ai sur des aspects spécifiques.
+Pour les sessions ultérieures, importez uniquement les sections pertinentes à votre travail du jour. Cela permet de focaliser l'attention de Claude sur des aspects spécifiques.
 
 _Exemple de prompt_ : "Aujourd'hui, je souhaite travailler sur la structuration de mon récit. J'ai importé la section 5 du guide qui traite du workflow Obsidian. Pourrais-tu m'aider à appliquer ces concepts à mon projet ?"
 
@@ -30,11 +30,11 @@ _Exemple de prompt_ : "Aujourd'hui, je souhaite travailler sur la structuration 
 
 Utilisez le système de tags pour référencer précisément des concepts spécifiques du guide.
 
-_Exemple de prompt_ : "Dans le guide Project Knowledge que je t'ai partagé, j'aimerais approfondir le concept #[Brainstorming](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d). Comment puis-je l'appliquer à mon roman historique ?"
+_Exemple de prompt_ : "Dans le guide que je t'ai partagé, j'aimerais approfondir le concept [Brainstorming](ia/claude03-brainstorming.md) #IA. Comment puis-je l'appliquer à mon roman historique ?"
 
-### 2.3. Organisation des projets dans Claude.ai
+### 2.3. Organisation des projets dans Claude
 
-Structurez vos interactions avec Claude.ai selon les recommandations de la section 4 du guide :
+Structurez vos interactions avec Claude selon les recommandations de la section 4 du guide :
 
 #### 2.3.1. Création de projets distincts
 
@@ -48,11 +48,11 @@ Référencez le guide de manière cohérente dans chaque projet pour maintenir l
 
 #### 2.3.3. Documentation des sessions
 
-Documentez vos sessions selon la méthode #[SessionsLog](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d) pour garder une trace de vos progrès et des suggestions importantes.
+Documentez vos sessions selon la méthode [SessionsLog](ia/claude06-sessions-log.md) #IA pour garder une trace de vos progrès et des suggestions importantes.
 
-### 2.4. Communication efficace avec Claude.ai
+### 2.4. Communication efficace avec Claude
 
-Pour maximiser la valeur de vos interactions avec Claude.ai :
+Pour maximiser la valeur de vos interactions avec Claude :
 
 #### 2.4.1. Précision des demandes
 
@@ -64,17 +64,17 @@ Lorsque vous soumettez du contenu pour révision, précisez sa place dans la str
 
 #### 2.4.3. Questions de suivi
 
-Posez des questions complémentaires pour approfondir les suggestions de Claude.ai et comprendre leur application concrète.
+Posez des questions complémentaires pour approfondir les suggestions de Claude et comprendre leur application concrète.
 
 #### 2.4.4. Demande d'exemples adaptés
 
 Sollicitez des exemples spécifiques à votre genre ou style littéraire.
 
-## 3. Pour Claude.ai : Comment interpréter et utiliser ce guide
+## 3. Pour Claude : Comment interpréter et utiliser ce guide
 
 ### 3.1. Compréhension du système de tags
 
-Ce guide utilise un système de tags structurés sous la forme #[NomDuConcept](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d). Ces tags servent de points de référence conceptuels et permettent de naviguer efficacement dans la méthodologie.
+Ce guide utilise un système de tags structurés sous la forme [NomDuConcept](chemin/vers/fichier.md) #Catégorie. Ces tags servent de points de référence conceptuels et permettent de naviguer efficacement dans la méthodologie.
 
 Lorsqu'un utilisateur fait référence à un tag, vous devriez :
 
@@ -142,7 +142,7 @@ Offrez des alternatives pour différents genres littéraires ou préférences pe
 
 ## 4. Évolution collaborative du guide
 
-Le Project Knowledge est un document évolutif, conçu pour s'améliorer avec l'usage et les retours d'expérience. Utilisateurs et Claude.ai sont encouragés à contribuer à son perfectionnement :
+Le guide est un document évolutif, conçu pour s'améliorer avec l'usage et les retours d'expérience. Utilisateurs et Claude sont encouragés à contribuer à son perfectionnement :
 
 ### 4.1. Identification des améliorations potentielles
 
@@ -160,7 +160,7 @@ Communiquez les approches découvertes lors de l'application pratique du guide.
 
 Consignez les modifications réussies pour différents genres ou environnements de travail.
 
-Cette approche collaborative entre l'utilisateur, Claude.ai et le guide méthodologique crée un écosystème d'amélioration continue, où chaque projet littéraire bénéficie de l'expérience collective et de l'assistance intelligente de l'IA.
+Cette approche collaborative entre l'utilisateur, Claude et le guide méthodologique crée un écosystème d'amélioration continue, où chaque projet littéraire bénéficie de l'expérience collective et de l'assistance intelligente de l'IA.
 
 ## 5. Exemple complet d'une session de travail
 
@@ -174,16 +174,16 @@ Un auteur travaille sur un roman de science-fiction et souhaite développer un p
 
 L'auteur identifie les sections pertinentes du guide :
 
-- #[ElementsGestion](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d) pour la création de fiches personnage
-- #[Brainstorming](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d) pour l'exploration des possibilités avec Claude.ai
+- [ElementsGestion](workflow/obs02-elements-gestion.md) #Workflow pour la création de fiches personnage
+- [Brainstorming](ia/claude03-brainstorming.md) #IA pour l'exploration des possibilités avec Claude
 
-### 5.3. Session avec Claude.ai
+### 5.3. Session avec Claude
 
-**Utilisateur** : "J'ai importé le guide Project Knowledge. Je travaille sur un personnage secondaire pour mon roman de science-fiction. Je souhaite appliquer les méthodes #[ElementsGestion](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d) et #[Brainstorming](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d). Voici ma description actuelle du personnage : [description]. Comment pourrais-je l'approfondir en utilisant la méthodologie du guide ?"
+**Utilisateur** : "J'ai importé le guide méthodologique. Je travaille sur un personnage secondaire pour mon roman de science-fiction. Je souhaite appliquer les méthodes [ElementsGestion](workflow/obs02-elements-gestion.md) #Workflow et [Brainstorming](ia/claude03-brainstorming.md) #IA. Voici ma description actuelle du personnage : [description]. Comment pourrais-je l'approfondir en utilisant la méthodologie du guide ?"
 
-**Claude.ai** : "Je vois que vous souhaitez développer un personnage secondaire en utilisant deux concepts clés du guide Project Knowledge. Commençons par structurer notre approche :
+**Claude** : "Je vois que vous souhaitez développer un personnage secondaire en utilisant deux concepts clés du guide. Commençons par structurer notre approche :
 
-1. D'après la section #[ElementsGestion](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d), je vous suggère d'utiliser un template standardisé pour votre personnage. Le guide recommande la structure suivante :
+1. D'après la section [ElementsGestion](workflow/obs02-elements-gestion.md) #Workflow, je vous suggère d'utiliser un template standardisé pour votre personnage. Le guide recommande la structure suivante :
     - Caractéristiques (âge, apparence, traits de caractère)
     - Contexte (origine, famille, occupation)
     - Arc narratif (motivation, conflit, évolution)
@@ -191,7 +191,7 @@ L'auteur identifie les sections pertinentes du guide :
 
 Pour votre personnage de science-fiction, nous pourrions ajouter une section spécifique sur ses capacités technologiques ou sa relation avec les éléments futuristes de votre univers.
 
-2. Maintenant, appliquons la technique de #[Brainstorming](https://claude.ai/chat/70755d9d-72f7-41b3-a2bd-8c447820db2d) pour explorer les dimensions potentielles de ce personnage :
+2. Maintenant, appliquons la technique de [Brainstorming](ia/claude03-brainstorming.md) #IA pour explorer les dimensions potentielles de ce personnage :
 
 [Claude développe plusieurs aspects du personnage]
 
@@ -199,8 +199,37 @@ Comment cette approche vous paraît-elle ? Souhaitez-vous explorer davantage cer
 
 ### 5.4. Résultat
 
-L'utilisateur obtient une fiche personnage structurée selon la méthodologie du guide, enrichie par l'intelligence contextuelle de Claude.ai, qu'il peut ensuite intégrer dans son système de notes Obsidian.
+L'utilisateur obtient une fiche personnage structurée selon la méthodologie du guide, enrichie par l'intelligence contextuelle de Claude, qu'il peut ensuite intégrer dans son système de notes Obsidian.
+
+## 6. Ressources complémentaires
+
+Pour approfondir votre utilisation du guide, n'oubliez pas de consulter les documents complémentaires :
+
+- [conceptes-cles.md](docs/conceptes-cles.md) - Synthèse des concepts fondamentaux
+- [faq.md](docs/faq.md) - Réponses aux questions fréquentes
+- [glossaire.md](docs/glossaire.md) - Définitions des termes techniques
+- [ressources-externes.md](docs/ressources-externes.md) - Références et outils additionnels
+
+## 7. Terminologie et bonnes pratiques
+
+Pour une utilisation optimale de ce guide avec Claude, suivez les recommandations de la section [ClaudeBestPractices](ia/claude07-best-practices.md) #IA du guide complet, notamment :
+
+### 7.1. Nomenclature correcte
+- Référez-vous toujours à l'assistant comme "Claude" (sans ".ai")
+- Utilisez une terminologie cohérente dans vos communications
+
+### 7.2. Structuration des documents
+- Organisez vos documents avec des en-têtes clairs
+- Utilisez une hiérarchie logique pour faciliter l'analyse
+- Maintenez une structure cohérente entre les documents liés
+
+### 7.3. Communication efficace
+- Formulez des instructions précises et détaillées
+- Fournissez suffisamment de contexte
+- Utilisez un processus itératif d'amélioration
 
 ---
 
-Cette directive explique comment les deux parties - l'utilisateur et Claude.ai - peuvent travailler ensemble efficacement en utilisant le guide comme cadre méthodologique partagé, créant ainsi un environnement de travail littéraire puissant et structuré.
+Ce document est évolutif. Référez-vous à la version la plus récente sur le dépôt Git.
+
+Version: 1.1 | Dernière mise à jour: 19 mars 2025
