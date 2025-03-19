@@ -34,7 +34,7 @@ Ce guide est conçu pour être utilisé **en collaboration directe avec Claude.a
 
 ## Documentation principale
 
-La documentation complète de ce projet est disponible dans [le guide complet](obsidian://open?vault=edition-litteraire-claude-ai&file=docs%2Fguide-complet). Ce guide détaillé explique:
+La documentation complète de ce projet est disponible dans [[docs/guide-complet|le guide complet]]. Ce guide détaillé explique:
 
 - Le workflow d'édition littéraire assisté par IA en 6 phases
 - L'utilisation combinée de Claude.ai, Obsidian et VS Code
@@ -47,9 +47,9 @@ Il s'agit du document fondateur de ce projet, initialement développé sous le n
 
 Pour commencer immédiatement, consultez nos guides spécifiques par plateforme:
 
-- [Guide de démarrage Windows](https://claude.ai/chat/guides-demarrage/quick-start-windows.md)
-- [Guide de démarrage macOS](https://claude.ai/chat/guides-demarrage/quick-start-mac.md)
-- [Guide de démarrage Linux](https://claude.ai/chat/guides-demarrage/quick-start-linux.md)
+- [[guides-demarrage/quick-start-windows|Guide de démarrage Windows]]
+- [[guides-demarrage/quick-start-mac|Guide de démarrage macOS]]
+- [[guides-demarrage/quick-start-linux|Guide de démarrage Linux]]
 
 ## Intégration avec Claude.ai
 
@@ -68,12 +68,12 @@ Pour une efficacité maximale, créez différentes conversations dans Claude.ai 
 
 ## Contributions
 
-Les contributions à ce projet sont les bienvenues. Consultez [CONTRIBUTING.md](https://claude.ai/chat/CONTRIBUTING.md) pour les directives de participation.
+Les contributions à ce projet sont les bienvenues. Consultez [[CONTRIBUTING|le guide de contribution]] pour les directives de participation.
 
 ## Licence
 
-Ce projet est distribué sous licence [précisez votre licence]. Voir le fichier [LICENSE](https://claude.ai/chat/LICENSE) pour plus de détails.
+Ce projet est distribué sous licence [précisez votre licence]. Voir le fichier [[LICENSE|LICENSE]] pour plus de détails.
 
 ---
 
-_Ce projet est en évolution constante. Dernière mise à jour: [Date]_
+_Ce projet est en évolution constante. Dernière mise à jour: Mars 2025_
