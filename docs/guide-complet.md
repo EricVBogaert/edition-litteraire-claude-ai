@@ -1,6 +1,6 @@
 # PROJECT KNOWLEDGE: GUIDE COMPLET
 
-## Édition littéraire assistée par Claude.ai avec Obsidian & VS Code
+## Édition littéraire assistée par Claude avec Obsidian & VS Code
 
 ---
 
@@ -16,8 +16,8 @@
 - [3. STRUCTURE DU PROJECT KNOWLEDGE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#3-structure-du-project-knowledge)
     - [Organisation des fichiers](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#organisation-des-fichiers)
     - [Document index](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#document-index)
-- [4. UTILISATION DE CLAUDE.AI](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#4-utilisation-de-claudeai)
-    - [Organisation en projets Claude.ai](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#organisation-en-projets-claudeai)
+- [4. UTILISATION DE CLAUDE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#4-utilisation-de-claude)
+    - [Organisation en projets Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#organisation-en-projets-claude)
     - [Importation de documents GitHub](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#importation-de-documents-github)
     - [Initialisation du projet](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#initialisation-du-projet)
     - [Sessions de brainstorming](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#sessions-de-brainstorming)
@@ -48,17 +48,18 @@
 - [9. RESSOURCES COMPLÉMENTAIRES](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#9-ressources-compl%C3%A9mentaires)
     - [Tutoriels recommandés](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#tutoriels-recommand%C3%A9s)
     - [Extensions et plugins utiles](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#extensions-et-plugins-utiles)
+    - [Bonnes pratiques avec Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#bonnes-pratiques-avec-claude)
 - [FIN DU GUIDE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#fin-du-guide)
 
 ---
 
 ## DIRECTIVE D'UTILISATION
 
-Ce guide documente un workflow d'édition littéraire assisté par IA combinant Claude.ai, Obsidian et VS Code. Il est conçu pour les auteurs et éditeurs habitués aux outils traditionnels (Word, etc.) souhaitant adopter un environnement de travail plus puissant.
+Ce guide documente un workflow d'édition littéraire assisté par IA combinant Claude, Obsidian et VS Code. Il est conçu pour les auteurs et éditeurs habitués aux outils traditionnels (Word, etc.) souhaitant adopter un environnement de travail plus puissant.
 
 ### Système de navigation par tags
 
-Ce document utilise un système de tags structurés pour faciliter la navigation et permettre à Claude.ai de comprendre les références croisées:
+Ce document utilise un système de tags structurés pour faciliter la navigation et permettre à Claude de comprendre les références croisées:
 
 ```
 #[NomDuConcept](TypeDeRéférence:IdentifiantSection)
@@ -72,7 +73,7 @@ Ce document utilise un système de tags structurés pour faciliter la navigation
 - Structure (S) - Éléments d'organisation du contenu
 - Format (F) - Types de fichiers et formats de sortie
 - Pratique (P) - Bonnes pratiques recommandées
-- IA (I) - Utilisation spécifique de Claude.ai
+- IA (I) - Utilisation spécifique de Claude
 - Référence (R) - Ressources supplémentaires
 
 ---
@@ -81,7 +82,7 @@ Ce document utilise un système de tags structurés pour faciliter la navigation
 
 Notre workflow d'édition littéraire combine trois outils principaux:
 
-1. **Claude.ai** #[Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Assistant IA pour la révision, l'amélioration et la génération de contenu
+1. **Claude** #[Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Assistant IA pour la révision, l'amélioration et la génération de contenu
 2. **Obsidian** #[Obsidian](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Pour l'idéation, l'organisation conceptuelle et la structure
 3. **VS Code** #[VSCode](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Pour le travail technique et les intégrations
 
@@ -90,7 +91,7 @@ Le flux de travail se décompose en 6 phases principales:
 ```mermaid
 graph TD
     A[Idéation dans Obsidian] --> B[Construction de la structure]
-    B --> C[Rédaction assistée par Claude.ai]
+    B --> C[Rédaction assistée par Claude]
     C --> D[Révision collaborative]
     D --> E[Mise en forme technique dans VS Code]
     E --> F[Production des formats finaux]
@@ -110,7 +111,7 @@ graph TD
 
 ### Installation des outils #[Installation](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-1. **Claude.ai**
+1. **Claude**
     
     - Accédez à [claude.ai](https://claude.ai/)
     - Créez un compte si nécessaire
@@ -199,11 +200,11 @@ Exemple:
 
 ---
 
-## 4. UTILISATION DE CLAUDE.AI
+## 4. UTILISATION DE CLAUDE
 
-### Organisation en projets Claude.ai #[ProjetsClaude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Organisation en projets Claude #[ProjetsClaude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Structurez votre travail efficacement sur Claude.ai:
+Structurez votre travail efficacement sur Claude:
 
 1. Créez des projets distincts pour:
     
@@ -228,7 +229,7 @@ Structurez votre travail efficacement sur Claude.ai:
 
 ### Importation de documents GitHub #[ImportGitHub](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Claude.ai peut importer directement des documents depuis GitHub:
+Claude peut importer directement des documents depuis GitHub:
 
 1. Avantages:
     
@@ -238,7 +239,7 @@ Claude.ai peut importer directement des documents depuis GitHub:
     - Analyse de sections entières
 2. Comment importer:
     
-    - Utilisez la fonction d'upload de document dans l'interface Claude.ai
+    - Utilisez la fonction d'upload de document dans l'interface Claude
     - Partagez des liens directs vers les fichiers raw de GitHub
     - Demandez à Claude d'analyser des sections spécifiques
 3. Bonnes pratiques:
@@ -249,7 +250,7 @@ Claude.ai peut importer directement des documents depuis GitHub:
 
 ### Initialisation du projet #[InitProjet](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Pour initialiser Claude.ai avec votre projet:
+Pour initialiser Claude avec votre projet:
 
 1. Créez une session de chat dédiée
 2. Présentez le concept général et le genre littéraire
@@ -269,7 +270,7 @@ qui devrait être [caractéristiques du style].
 
 ### Sessions de brainstorming #[Brainstorming](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Utilisez Claude.ai pour explorer de nouvelles idées:
+Utilisez Claude pour explorer de nouvelles idées:
 
 1. Décrivez un élément spécifique (personnage, scène, concept)
 2. Demandez des variations ou développements
@@ -285,7 +286,7 @@ J'aimerais explorer ses motivations et son arc narratif.
 
 ### Gestion des limitations de session #[LimiteSessions](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Optimisez l'utilisation de Claude.ai malgré les limitations:
+Optimisez l'utilisation de Claude malgré les limitations:
 
 1. **Contraintes actuelles**:
     
@@ -327,7 +328,7 @@ J'aimerais que tu:
 
 ### Stockage des interactions #[SessionsLog](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
 
-Documenter vos sessions avec Claude.ai:
+Documenter vos sessions avec Claude:
 
 1. Créez un dossier `claude-sessions/` dans votre projet
 2. Pour chaque session importante, créez un fichier Markdown
@@ -667,6 +668,76 @@ Pour travailler à plusieurs:
 
 - Obsidian: Dataview, Admonition
 - VS Code: Code Spell Checker, Word Count
+
+### Bonnes pratiques avec Claude #[ClaudeBestPractices](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+
+#### Nomenclature correcte
+
+1. **Utilisation du nom**: L'assistant s'appelle simplement "Claude" et non "Claude.ai". Le ".ai" fait référence au domaine du site web (claude.ai), mais n'est pas inclus dans le nom du produit.
+    
+2. **Références cohérentes**: Utilisez toujours "Claude" de manière cohérente dans tous vos documents et communications pour éviter la confusion.
+    
+
+#### Utilisation des liens dans les documents
+
+1. **Liens relatifs uniquement**: Évitez d'inclure des liens absolus vers des conversations Claude dans vos documents destinés à être partagés. Ces liens ne fonctionneront pas pour les autres utilisateurs.
+    
+    ```markdown
+    # À éviter
+    #[Concept](https://claude.ai/chat/f9fb33fd-e95d-4a5f-838c-ccc1c60df751)
+    
+    # Préférez cette approche
+    #[Concept](TypeDeRéférence:IdentifiantSection)
+    ```
+    
+2. **Liens pour les développeurs du guide**: Si vous développez ce guide et souhaitez référencer des conversations Claude, utilisez un fichier séparé de notes développeur ou incluez ces liens sous forme de commentaires.
+    
+3. **Partage de conversations**: Pour partager une conversation Claude spécifique avec un collaborateur, utilisez la fonction d'exportation de Claude ou créez un résumé dans un fichier de votre projet.
+    
+
+#### Meilleures pratiques pour la communication avec Claude
+
+1. **Instructions claires et précises**: Formulez vos demandes avec précision pour obtenir les meilleurs résultats.
+    
+    ```
+    # Moins efficace
+    "Améliore mon texte"
+    
+    # Plus efficace
+    "Améliore la clarté et la concision de ce paragraphe en préservant les informations clés sur les personnages"
+    ```
+    
+2. **Contexte suffisant**: Fournissez toujours assez de contexte pour que Claude comprenne votre projet.
+    
+    ```
+    # Fournir du contexte
+    "Ce texte fait partie d'un roman historique se déroulant en France au 18e siècle. Le personnage principal vient de découvrir..."
+    ```
+    
+3. **Feedback itératif**: Engagez un dialogue avec Claude en affinant progressivement les résultats par des retours précis.
+    
+4. **Organisation des documents**: Structurez vos documents avec des en-têtes clairs et une hiérarchie logique pour faciliter l'analyse par Claude.
+    
+
+#### Organisation des références pour Claude
+
+1. Pour que Claude puisse naviguer efficacement dans votre document:
+    
+    - Utilisez des identifiants de section clairs et uniques
+    - Structurez vos tags de manière cohérente
+    - Incluez des titres explicites pour chaque section
+2. Lors du téléchargement vers Claude, assurez-vous que votre document maintient sa structure et sa mise en forme pour faciliter l'analyse.
+    
+
+#### Gestion des limitations techniques
+
+1. **Taille des messages**: Divisez les longs textes en segments thématiques de taille raisonnable.
+    
+2. **Continuité des sessions**: Pour maintenir le contexte entre les sessions:
+    
+    - Résumez les points clés des conversations précédentes
+    - Utilisez des références explicites aux discussions antérieures
+    - Conservez un document d'état pour suivre la progression du projet
 
 ---
 
