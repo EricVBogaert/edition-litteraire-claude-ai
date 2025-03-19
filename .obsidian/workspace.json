@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "quick-start-windows"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "README.md",
+                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour README"
+              "title": "Rétrolien pour quick-start-windows"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "README.md",
+                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de README"
+              "title": "Liens sortants de quick-start-windows"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "README.md",
+                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan de README"
+              "title": "Plan de quick-start-windows"
             }
           }
         ]
@@ -171,6 +171,7 @@
   },
   "active": "13cdda630752d7af",
   "lastOpenFiles": [
+    "README.md",
     "edition-litteraire-claude-ai/ressources/bibliographie",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/markdown-guide.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/git-commands.md",
@@ -186,7 +187,6 @@
     "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/README.md",
     "edition-litteraire-claude-ai/modules-avances/analyse-stylistique/src",
     "edition-litteraire-claude-ai/modules-avances/analyse-stylistique",
-    "edition-litteraire-claude-ai/modules-avances/integration-grammalecte/setup.py",
     "edition-litteraire-claude-ai/modules-avances/integration-grammalecte/README.md",
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux-avance.md",
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux.md",
