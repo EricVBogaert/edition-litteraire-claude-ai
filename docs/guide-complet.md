@@ -1,55 +1,53 @@
 # PROJECT KNOWLEDGE: GUIDE COMPLET
-
 ## Édition littéraire assistée par Claude avec Obsidian & VS Code
 
 ---
 
 ## Table des matières
-
-- [DIRECTIVE D'UTILISATION](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#directive-dutilisation)
-    - [Système de navigation par tags](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#syst%C3%A8me-de-navigation-par-tags)
-- [1. VUE D'ENSEMBLE DU WORKFLOW](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#1-vue-densemble-du-workflow)
-    - [Avantages clés de ce workflow](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#avantages-cl%C3%A9s-de-ce-workflow)
-- [2. PRÉPARATION DE L'ENVIRONNEMENT](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#2-pr%C3%A9paration-de-lenvironnement)
-    - [Installation des outils](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#installation-des-outils)
-    - [Configuration du dépôt Git](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#configuration-du-d%C3%A9p%C3%B4t-git)
-- [3. STRUCTURE DU PROJECT KNOWLEDGE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#3-structure-du-project-knowledge)
-    - [Organisation des fichiers](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#organisation-des-fichiers)
-    - [Document index](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#document-index)
-- [4. UTILISATION DE CLAUDE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#4-utilisation-de-claude)
-    - [Organisation en projets Claude](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#organisation-en-projets-claude)
-    - [Importation de documents GitHub](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#importation-de-documents-github)
-    - [Initialisation du projet](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#initialisation-du-projet)
-    - [Sessions de brainstorming](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#sessions-de-brainstorming)
-    - [Gestion des limitations de session](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#gestion-des-limitations-de-session)
-    - [Révision de contenu](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#r%C3%A9vision-de-contenu)
-    - [Stockage des interactions](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#stockage-des-interactions)
-- [5. WORKFLOW OBSIDIAN](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#5-workflow-obsidian)
-    - [Création de la structure](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#cr%C3%A9ation-de-la-structure)
-    - [Gestion des personnages et éléments](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#gestion-des-personnages-et-%C3%A9l%C3%A9ments)
-    - [Navigation par graphe](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#navigation-par-graphe)
-- [6. INTÉGRATION VS CODE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#6-int%C3%A9gration-vs-code)
-    - [Configuration optimale](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#configuration-optimale)
-    - [Scripts d'automatisation](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#scripts-dautomatisation)
-    - [Options multiplateforme](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#options-multiplateforme)
-- [6.1 GESTION DE LA TYPOGRAPHIE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#61-gestion-de-la-typographie)
-    - [Typographie française avancée](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#typographie-fran%C3%A7aise-avanc%C3%A9e)
-    - [Outils de vérification typographique](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#outils-de-v%C3%A9rification-typographique)
-    - [Interface utilisateur pour la correction](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#interface-utilisateur-pour-la-correction)
-    - [Standards spécifiques par genre](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#standards-sp%C3%A9cifiques-par-genre)
-- [7. GÉNÉRATION DES FORMATS FINAUX](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#7-g%C3%A9n%C3%A9ration-des-formats-finaux)
-    - [HTML et site web](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#html-et-site-web)
-    - [PDF de qualité édition](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#pdf-de-qualit%C3%A9-%C3%A9dition)
-    - [Format EPUB](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#format-epub)
-- [8. BONNES PRATIQUES](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#8-bonnes-pratiques)
-    - [Versionnement](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#versionnement)
-    - [Sauvegarde](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#sauvegarde)
-    - [Collaboration](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#collaboration)
-- [9. RESSOURCES COMPLÉMENTAIRES](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#9-ressources-compl%C3%A9mentaires)
-    - [Tutoriels recommandés](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#tutoriels-recommand%C3%A9s)
-    - [Extensions et plugins utiles](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#extensions-et-plugins-utiles)
-    - [Bonnes pratiques avec Claude](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#bonnes-pratiques-avec-claude)
-- [FIN DU GUIDE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#fin-du-guide)
+- [DIRECTIVE D'UTILISATION](#directive-dutilisation)
+  - [Système de navigation par tags](#système-de-navigation-par-tags)
+- [1. VUE D'ENSEMBLE DU WORKFLOW](#1-vue-densemble-du-workflow)
+  - [Avantages clés de ce workflow](#avantages-clés-de-ce-workflow)
+- [2. PRÉPARATION DE L'ENVIRONNEMENT](#2-préparation-de-lenvironnement)
+  - [Installation des outils](#installation-des-outils)
+  - [Configuration du dépôt Git](#configuration-du-dépôt-git)
+- [3. STRUCTURE DU PROJECT KNOWLEDGE](#3-structure-du-project-knowledge)
+  - [Organisation des fichiers](#organisation-des-fichiers)
+  - [Document index](#document-index)
+- [4. UTILISATION DE CLAUDE](#4-utilisation-de-claude)
+  - [Organisation en projets Claude](#organisation-en-projets-claude)
+  - [Importation de documents GitHub](#importation-de-documents-github)
+  - [Initialisation du projet](#initialisation-du-projet)
+  - [Sessions de brainstorming](#sessions-de-brainstorming)
+  - [Gestion des limitations de session](#gestion-des-limitations-de-session)
+  - [Révision de contenu](#révision-de-contenu)
+  - [Stockage des interactions](#stockage-des-interactions)
+- [5. WORKFLOW OBSIDIAN](#5-workflow-obsidian)
+  - [Création de la structure](#création-de-la-structure)
+  - [Gestion des personnages et éléments](#gestion-des-personnages-et-éléments)
+  - [Navigation par graphe](#navigation-par-graphe)
+- [6. INTÉGRATION VS CODE](#6-intégration-vs-code)
+  - [Configuration optimale](#configuration-optimale)
+  - [Scripts d'automatisation](#scripts-dautomatisation)
+  - [Options multiplateforme](#options-multiplateforme)
+- [6.1 GESTION DE LA TYPOGRAPHIE](#61-gestion-de-la-typographie)
+  - [Typographie française avancée](#typographie-française-avancée)
+  - [Outils de vérification typographique](#outils-de-vérification-typographique)
+  - [Interface utilisateur pour la correction](#interface-utilisateur-pour-la-correction)
+  - [Standards spécifiques par genre](#standards-spécifiques-par-genre)
+- [7. GÉNÉRATION DES FORMATS FINAUX](#7-génération-des-formats-finaux)
+  - [HTML et site web](#html-et-site-web)
+  - [PDF de qualité édition](#pdf-de-qualité-édition)
+  - [Format EPUB](#format-epub)
+- [8. BONNES PRATIQUES](#8-bonnes-pratiques)
+  - [Versionnement](#versionnement)
+  - [Sauvegarde](#sauvegarde)
+  - [Collaboration](#collaboration)
+- [9. RESSOURCES COMPLÉMENTAIRES](#9-ressources-complémentaires)
+  - [Tutoriels recommandés](#tutoriels-recommandés)
+  - [Extensions et plugins utiles](#extensions-et-plugins-utiles)
+  - [Bonnes pratiques avec Claude](#bonnes-pratiques-avec-claude)
+- [FIN DU GUIDE](#fin-du-guide)
 
 ---
 
@@ -66,15 +64,14 @@ Ce document utilise un système de liens Obsidian et de tags pour faciliter la n
 ```
 
 **Types de références:**
-
-- Workflow (W) - Étapes du processus d'édition
-- Outil (O) - Logiciels et interfaces
-- Technique (T) - Méthodes spécifiques d'édition
-- Structure (S) - Éléments d'organisation du contenu
-- Format (F) - Types de fichiers et formats de sortie
-- Pratique (P) - Bonnes pratiques recommandées
-- IA (I) - Utilisation spécifique de Claude
-- Référence (R) - Ressources supplémentaires
+* Workflow (W) - Étapes du processus d'édition
+* Outil (O) - Logiciels et interfaces
+* Technique (T) - Méthodes spécifiques d'édition
+* Structure (S) - Éléments d'organisation du contenu
+* Format (F) - Types de fichiers et formats de sortie
+* Pratique (P) - Bonnes pratiques recommandées
+* IA (I) - Utilisation spécifique de Claude
+* Référence (R) - Ressources supplémentaires
 
 ---
 
@@ -98,7 +95,6 @@ graph TD
 ```
 
 ### Avantages clés de ce workflow
-
 - Organisation non-linéaire des idées
 - Versionnement robuste avec Git
 - Assistance IA personnalisée
@@ -112,43 +108,40 @@ graph TD
 ### Installation des outils [[Workflow/PREP01|Installation]] #Workflow
 
 1. **Claude**
-    
-    - Accédez à [claude.ai](https://claude.ai/)
-    - Créez un compte si nécessaire
+   - Accédez à [claude.ai](https://claude.ai)
+   - Créez un compte si nécessaire
+
 2. **Obsidian**
-    
-    - Téléchargez depuis [obsidian.md](https://obsidian.md/)
-    - Installez les plugins recommandés:
-        - Outliner
-        - Kanban
-        - Templates
-        - Tag Pane
-        - Obsidian Git
+   - Téléchargez depuis [obsidian.md](https://obsidian.md)
+   - Installez les plugins recommandés:
+     * Outliner
+     * Kanban
+     * Templates
+     * Tag Pane
+     * Obsidian Git
+
 3. **VS Code**
-    
-    - Téléchargez depuis [code.visualstudio.com](https://code.visualstudio.com/)
-    - Installez les extensions recommandées:
-        - Markdown All in One
-        - Markdown Preview Enhanced
-        - GitLens
-        - Paste Image
+   - Téléchargez depuis [code.visualstudio.com](https://code.visualstudio.com)
+   - Installez les extensions recommandées:
+     * Markdown All in One
+     * Markdown Preview Enhanced
+     * GitLens
+     * Paste Image
 
 ### Configuration du dépôt Git [[Workflow/PREP02|GitSetup]] #Workflow
 
 1. Créez un nouveau dépôt Git local:
-    
-    ```bash
-    mkdir mon-projet-litteraire
-    cd mon-projet-litteraire
-    git init
-    ```
-    
+   ```bash
+   mkdir mon-projet-litteraire
+   cd mon-projet-litteraire
+   git init
+   ```
+
 2. Configurez Obsidian pour utiliser ce dossier comme coffre (vault)
-    
+
 3. Installez et configurez le plugin Obsidian Git:
-    
-    - Intervalle de sauvegarde: 10 minutes
-    - Messages de commit automatiques
+   - Intervalle de sauvegarde: 10 minutes
+   - Messages de commit automatiques
 
 ---
 
@@ -170,14 +163,12 @@ mon-projet-litteraire/
 ### Document index [[Structure/ORG02|IndexDoc]] #Structure
 
 Le fichier `index.md` sert de point d'entrée et contient:
-
 - Métadonnées du projet
 - Liens vers les sections principales
 - État d'avancement
 - Notes éditoriales générales
 
 Exemple:
-
 ```markdown
 # Mon Projet Littéraire
 
@@ -207,46 +198,43 @@ Exemple:
 Structurez votre travail efficacement sur Claude:
 
 1. Créez des projets distincts pour:
-    
-    - Développement narratif global
-    - Travail sur les personnages
-    - Révision stylistique
-    - Recherche thématique
+   - Développement narratif global
+   - Travail sur les personnages
+   - Révision stylistique
+   - Recherche thématique
+
 2. Avantages de l'organisation en projets:
-    
-    - Contexte préservé entre les sessions
-    - Historique des conversations accessible
-    - Séparation claire des différentes dimensions du travail
-    - Facilite le partage avec des collaborateurs
+   - Contexte préservé entre les sessions
+   - Historique des conversations accessible
+   - Séparation claire des différentes dimensions du travail
+   - Facilite le partage avec des collaborateurs
+
 3. Nommez clairement vos projets pour faciliter la navigation:
-    
-    ```
-    [Titre du livre] - Développement narratif
-    [Titre du livre] - Personnages
-    [Titre du livre] - Révision
-    ```
-    
+   ```
+   [Titre du livre] - Développement narratif
+   [Titre du livre] - Personnages
+   [Titre du livre] - Révision
+   ```
 
 ### Importation de documents GitHub [[IA/CLAUDE01|ImportGitHub]] #IA
 
 Claude peut importer directement des documents depuis GitHub:
 
 1. Avantages:
-    
-    - Partage de documents volumineux
-    - Conservation de la mise en forme
-    - Travail sur des versions spécifiques
-    - Analyse de sections entières
+   - Partage de documents volumineux
+   - Conservation de la mise en forme
+   - Travail sur des versions spécifiques
+   - Analyse de sections entières
+
 2. Comment importer:
-    
-    - Utilisez la fonction d'upload de document dans l'interface Claude
-    - Partagez des liens directs vers les fichiers raw de GitHub
-    - Demandez à Claude d'analyser des sections spécifiques
+   - Utilisez la fonction d'upload de document dans l'interface Claude
+   - Partagez des liens directs vers les fichiers raw de GitHub
+   - Demandez à Claude d'analyser des sections spécifiques
+
 3. Bonnes pratiques:
-    
-    - Fragmentez les documents volumineux en sections logiques
-    - Utilisez des commentaires dans les fichiers pour guider Claude
-    - Référez-vous à des lignes ou sections spécifiques dans vos prompts
+   - Fragmentez les documents volumineux en sections logiques
+   - Utilisez des commentaires dans les fichiers pour guider Claude
+   - Référez-vous à des lignes ou sections spécifiques dans vos prompts
 
 ### Initialisation du projet [[IA/CLAUDE02|InitProjet]] #IA
 
@@ -255,10 +243,9 @@ Pour initialiser Claude avec votre projet:
 1. Créez une session de chat dédiée
 2. Présentez le concept général et le genre littéraire
 3. Définissez le ton et le style souhaités
-4. Établissez une terminologie spécifique
+4. Établissez une terminologie spécifique 
 
 Exemple de prompt initial:
-
 ```
 Je travaille sur un roman [genre] intitulé "[titre]". 
 Le concept central est [concept]. 
@@ -277,7 +264,6 @@ Utilisez Claude pour explorer de nouvelles idées:
 3. Enregistrez les idées pertinentes dans Obsidian
 
 Exemple:
-
 ```
 Peux-tu m'aider à développer le personnage de [nom]?
 Voici ce que j'ai déjà: [description existante].
@@ -289,21 +275,20 @@ J'aimerais explorer ses motivations et son arc narratif.
 Optimisez l'utilisation de Claude malgré les limitations:
 
 1. **Contraintes actuelles**:
-    
-    - Limite de taille par message
-    - Limite d'échanges par période
-    - Historique limité par conversation
+   - Limite de taille par message
+   - Limite d'échanges par période
+   - Historique limité par conversation
+
 2. **Stratégies d'optimisation**:
-    
-    - Divisez les longs textes en segments thématiques
-    - Utilisez des liens GitHub pour partager de longs documents
-    - Résumez les conversations précédentes dans les nouveaux prompts
-    - Exportez régulièrement les conversations importantes
+   - Divisez les longs textes en segments thématiques
+   - Utilisez des liens GitHub pour partager de longs documents
+   - Résumez les conversations précédentes dans les nouveaux prompts
+   - Exportez régulièrement les conversations importantes
+
 3. **Préparation du contexte**:
-    
-    - Créez des résumés à jour de votre projet
-    - Préparez des "fiches contextuelles" réutilisables
-    - Indiquez clairement où vous en étiez lors de la dernière session
+   - Créez des résumés à jour de votre projet
+   - Préparez des "fiches contextuelles" réutilisables
+   - Indiquez clairement où vous en étiez lors de la dernière session
 
 ### Révision de contenu [[IA/CLAUDE05|Revision]] #IA
 
@@ -314,7 +299,6 @@ Pour soumettre du contenu à révision:
 3. Intégrez les suggestions pertinentes dans votre document
 
 Exemple:
-
 ```
 Voici un extrait du chapitre 3:
 
@@ -355,7 +339,6 @@ Créez des fiches détaillées:
 3. Créez des liens bidirectionnels entre éléments connexes
 
 Exemple de template personnage:
-
 ```markdown
 # {{nom}}
 
@@ -410,7 +393,6 @@ Configurez VS Code pour le travail d'édition littéraire:
 Développez des scripts Python pour automatiser certaines tâches:
 
 1. Création d'un script d'assemblage:
-
 ```python
 # compile.py
 # Script qui assemble tous les fichiers Markdown selon la structure
@@ -423,7 +405,6 @@ def compile_document(index_file, output_file):
 ```
 
 2. Script d'extraction pour Claude:
-
 ```python
 # extract_for_claude.py
 # Extrait une section pour révision avec Claude
@@ -439,48 +420,41 @@ def extract_section(file_path, section_name):
 Pour accommoder les utilisateurs de différents environnements:
 
 1. **Interface graphique simple**:
-    
-    - Créez un script Python avec interface Tkinter:
-    
-    ```python
-    import tkinter as tk
-    from tkinter import filedialog
-    
-    def create_simple_gui():
-        root = tk.Tk()
-        root.title("Outils d'édition")
-        # Ajoutez des boutons pour les fonctions courantes
-        # Exemple: assembler, vérifier, exporter
-    ```
-    
+   - Créez un script Python avec interface Tkinter:
+   ```python
+   import tkinter as tk
+   from tkinter import filedialog
+   
+   def create_simple_gui():
+       root = tk.Tk()
+       root.title("Outils d'édition")
+       # Ajoutez des boutons pour les fonctions courantes
+       # Exemple: assembler, vérifier, exporter
+   ```
+
 2. **Utilisateurs Windows (CMD)**:
-    
-    - Créez des fichiers batch (.bat) équivalents:
-    
-    ```batch
-    @echo off
-    REM compile.bat
-    python compile.py %1 %2
-    ```
-    
+   - Créez des fichiers batch (.bat) équivalents:
+   ```batch
+   @echo off
+   REM compile.bat
+   python compile.py %1 %2
+   ```
+
 3. **Interface web GitHub**:
-    
-    - Ajoutez des Actions GitHub dans `.github/workflows/`:
-    
-    ```yaml
-    name: Compiler Document
-    on: [push]
-    jobs:
-      build:
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v2
-          - name: Set up Python
-            uses: actions/setup-python@v2
-          - name: Compiler
-            run: python compile.py
-    ```
-    
+   - Ajoutez des Actions GitHub dans `.github/workflows/`:
+   ```yaml
+   name: Compiler Document
+   on: [push]
+   jobs:
+     build:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: actions/checkout@v2
+         - name: Set up Python
+           uses: actions/setup-python@v2
+         - name: Compiler
+           run: python compile.py
+   ```
 
 ---
 
@@ -491,107 +465,101 @@ Pour accommoder les utilisateurs de différents environnements:
 La typographie française comporte des règles spécifiques à respecter:
 
 1. **Espaces insécables**:
-    
-    - Avant les signes doubles (:, ?, !, ;)
-    - Après l'ouverture et avant la fermeture des guillemets français (« »)
-    - Dans les nombres pour séparer les milliers
+   - Avant les signes doubles (:, ?, !, ;)
+   - Après l'ouverture et avant la fermeture des guillemets français (« »)
+   - Dans les nombres pour séparer les milliers
+
 2. **Guillemets**:
-    
-    - Utilisation des guillemets français (« ») pour les citations principales
-    - Guillemets anglais (" ") pour les citations à l'intérieur d'autres citations
+   - Utilisation des guillemets français (« ») pour les citations principales
+   - Guillemets anglais (" ") pour les citations à l'intérieur d'autres citations
+
 3. **Tirets**:
-    
-    - Tiret cadratin (—) pour les dialogues
-    - Tiret demi-cadratin (–) pour les incises
+   - Tiret cadratin (—) pour les dialogues
+   - Tiret demi-cadratin (–) pour les incises
 
 ### Outils de vérification typographique [[Technique/TYP03|OutilsTypo]] #Technique
 
 1. **Grammarleck** (Python):
-    
-    ```python
-    # typo_check.py
-    import grammalecte
-    
-    def check_typography(text_file):
-        with open(text_file, 'r', encoding='utf-8') as f:
-            text = f.read()
-        
-        gc = grammalecte.GrammarChecker("fr")
-        result = gc.correct(text)
-        
-        return result
-    ```
-    
-2. **Adaptation aux standards d'édition**: Créez un fichier de configuration pour respecter le style d'une maison d'édition:
-    
-    ```json
-    {
-      "typographie": {
-        "guillemets": "français",
-        "dialogues": "cadratin",
-        "citation_imbriquée": "anglais",
-        "espaces_insécables": true
-      }
-    }
-    ```
-    
+   ```python
+   # typo_check.py
+   import grammalecte
+   
+   def check_typography(text_file):
+       with open(text_file, 'r', encoding='utf-8') as f:
+           text = f.read()
+       
+       gc = grammalecte.GrammarChecker("fr")
+       result = gc.correct(text)
+       
+       return result
+   ```
+
+2. **Adaptation aux standards d'édition**:
+   Créez un fichier de configuration pour respecter le style d'une maison d'édition:
+   ```json
+   {
+     "typographie": {
+       "guillemets": "français",
+       "dialogues": "cadratin",
+       "citation_imbriquée": "anglais",
+       "espaces_insécables": true
+     }
+   }
+   ```
+
 3. **Script de correction automatique**:
-    
-    ```python
-    # auto_typography.py
-    import re
-    
-    def fix_french_typography(text):
-        # Remplace les guillemets droits par des guillemets français
-        text = re.sub(r'"([^"]*)"', r'« \1 »', text)
-        
-        # Ajoute des espaces insécables
-        text = re.sub(r'([?!:;])', r' \1', text)
-        
-        # Corrige les dialogues
-        text = re.sub(r'- ', r'— ', text)
-        
-        return text
-    ```
-    
+   ```python
+   # auto_typography.py
+   import re
+   
+   def fix_french_typography(text):
+       # Remplace les guillemets droits par des guillemets français
+       text = re.sub(r'"([^"]*)"', r'« \1 »', text)
+       
+       # Ajoute des espaces insécables
+       text = re.sub(r'([?!:;])', r' \1', text)
+       
+       # Corrige les dialogues
+       text = re.sub(r'- ', r'— ', text)
+       
+       return text
+   ```
 
 ### Interface utilisateur pour la correction [[Technique/TYP04|InterfaceTypo]] #Technique
 
 Pour les utilisateurs moins techniques:
 
 1. **Extension VS Code**:
-    
-    - Créez une extension simple avec des boutons pour appliquer les règles
-    - Ajoutez une prévisualisation en temps réel des corrections
+   - Créez une extension simple avec des boutons pour appliquer les règles
+   - Ajoutez une prévisualisation en temps réel des corrections
+
 2. **Interface web simple**:
-    
-    - Formulaire HTML permettant de coller du texte et d'obtenir une version corrigée
-    - Déployable sur GitHub Pages
+   - Formulaire HTML permettant de coller du texte et d'obtenir une version corrigée
+   - Déployable sur GitHub Pages
+
 3. **Intégration avec Obsidian**:
-    
-    - Créez un plugin personnalisé
-    - Ajoutez des commandes accessibles dans la palette d'Obsidian
+   - Créez un plugin personnalisé
+   - Ajoutez des commandes accessibles dans la palette d'Obsidian
 
 ### Standards spécifiques par genre [[Technique/TYP05|GenreTypo]] #Technique
 
 Configurez des préréglages pour différents genres littéraires:
 
 1. **Roman littéraire**:
-    
-    - Guillemets français
-    - Dialogues avec tiret cadratin et retour à la ligne
+   - Guillemets français
+   - Dialogues avec tiret cadratin et retour à la ligne
+
 2. **Poésie**:
-    
-    - Préservation des espaces en début de ligne
-    - Traitement spécial des enjambements
+   - Préservation des espaces en début de ligne
+   - Traitement spécial des enjambements
+
 3. **Documentation technique**:
-    
-    - Format de référence ISO
-    - Espacement spécifique pour les listes
+   - Format de référence ISO
+   - Espacement spécifique pour les listes
+
 4. **Livres académiques**:
-    
-    - Format de citation standardisé (APA, MLA, Chicago)
-    - Gestion des notes de bas de page
+   - Format de citation standardisé (APA, MLA, Chicago)
+   - Gestion des notes de bas de page
 
 ---
 
@@ -608,7 +576,6 @@ Utilisez VS Code pour générer les formats de sortie:
 ### PDF de qualité édition
 
 1. Utilisez Pandoc via terminal:
-
 ```bash
 pandoc -s document.md -o document.pdf --pdf-engine=xelatex --template=template.tex
 ```
@@ -618,7 +585,6 @@ pandoc -s document.md -o document.pdf --pdf-engine=xelatex --template=template.t
 ### Format EPUB
 
 1. Utilisez Pandoc pour générer l'EPUB:
-
 ```bash
 pandoc -s document.md -o document.epub --epub-cover-image=cover.jpg
 ```
@@ -634,7 +600,6 @@ pandoc -s document.md -o document.epub --epub-cover-image=cover.jpg
 1. Committez fréquemment avec des messages descriptifs
 2. Créez des branches pour les révisions majeures
 3. Utilisez des tags Git pour marquer les versions importantes:
-
 ```bash
 git tag -a v0.1 -m "Premier jet complet"
 ```
@@ -659,90 +624,74 @@ Pour travailler à plusieurs:
 ## 9. RESSOURCES COMPLÉMENTAIRES
 
 ### Tutoriels recommandés [[Référence/TUT01|Tutoriels]] #Référence
-
-- [Guide officiel Obsidian](https://help.obsidian.md/)
-- [Markdown Guide](https://www.markdownguide.org/)
+- [Guide officiel Obsidian](https://help.obsidian.md)
+- [Markdown Guide](https://www.markdownguide.org)
 - [Utilisation avancée de Git](https://git-scm.com/book)
 
 ### Extensions et plugins utiles [[Référence/EXT01|Extensions]] #Référence
-
 - Obsidian: Dataview, Admonition
 - VS Code: Code Spell Checker, Word Count
 
 ### Bonnes pratiques avec Claude [[IA/CLAUDE07|ClaudeBestPractices]] #IA
 
 #### Nomenclature correcte
-
 1. **Utilisation du nom**: L'assistant s'appelle simplement "Claude" et non "Claude.ai". Le ".ai" fait référence au domaine du site web (claude.ai), mais n'est pas inclus dans le nom du produit.
-    
+
 2. **Références cohérentes**: Utilisez toujours "Claude" de manière cohérente dans tous vos documents et communications pour éviter la confusion.
-    
 
 #### Utilisation des liens dans les documents
-
 1. **Liens relatifs uniquement**: Évitez d'inclure des liens absolus vers des conversations Claude dans vos documents destinés à être partagés. Ces liens ne fonctionneront pas pour les autres utilisateurs.
-    
-    ```markdown
-    # À éviter
-    [[https://claude.ai/chat/f9fb33fd-e95d-4a5f-838c-ccc1c60df751]]
-    
-    # Préférez cette approche
-    [[IA/CLAUDE01|ImportGitHub]] #IA
-    ```
-    
+   ```markdown
+   # À éviter
+   [[https://claude.ai/chat/f9fb33fd-e95d-4a5f-838c-ccc1c60df751]]
+   
+   # Préférez cette approche
+   [[IA/CLAUDE01|ImportGitHub]] #IA
+   ```
+
 2. **Liens pour les développeurs du guide**: Si vous développez ce guide et souhaitez référencer des conversations Claude, utilisez un fichier séparé de notes développeur ou incluez ces liens sous forme de commentaires.
-    
+
 3. **Partage de conversations**: Pour partager une conversation Claude spécifique avec un collaborateur, utilisez la fonction d'exportation de Claude ou créez un résumé dans un fichier de votre projet.
-    
 
 #### Meilleures pratiques pour la communication avec Claude
-
 1. **Instructions claires et précises**: Formulez vos demandes avec précision pour obtenir les meilleurs résultats.
-    
-    ```
-    # Moins efficace
-    "Améliore mon texte"
-    
-    # Plus efficace
-    "Améliore la clarté et la concision de ce paragraphe en préservant les informations clés sur les personnages"
-    ```
-    
+   ```
+   # Moins efficace
+   "Améliore mon texte"
+   
+   # Plus efficace
+   "Améliore la clarté et la concision de ce paragraphe en préservant les informations clés sur les personnages"
+   ```
+
 2. **Contexte suffisant**: Fournissez toujours assez de contexte pour que Claude comprenne votre projet.
-    
-    ```
-    # Fournir du contexte
-    "Ce texte fait partie d'un roman historique se déroulant en France au 18e siècle. Le personnage principal vient de découvrir..."
-    ```
-    
+   ```
+   # Fournir du contexte
+   "Ce texte fait partie d'un roman historique se déroulant en France au 18e siècle. Le personnage principal vient de découvrir..."
+   ```
+
 3. **Feedback itératif**: Engagez un dialogue avec Claude en affinant progressivement les résultats par des retours précis.
-    
+
 4. **Organisation des documents**: Structurez vos documents avec des en-têtes clairs et une hiérarchie logique pour faciliter l'analyse par Claude.
-    
 
 #### Organisation des références pour Claude
-
 1. Pour que Claude puisse naviguer efficacement dans votre document:
-    
-    - Utilisez des identifiants de section clairs et uniques
-    - Structurez vos tags de manière cohérente
-    - Incluez des titres explicites pour chaque section
+   - Utilisez des identifiants de section clairs et uniques
+   - Structurez vos tags de manière cohérente
+   - Incluez des titres explicites pour chaque section
+
 2. Lors du téléchargement vers Claude, assurez-vous que votre document maintient sa structure et sa mise en forme pour faciliter l'analyse.
-    
 
 #### Gestion des limitations techniques
-
 1. **Taille des messages**: Divisez les longs textes en segments thématiques de taille raisonnable.
-    
+   
 2. **Continuité des sessions**: Pour maintenir le contexte entre les sessions:
-    
-    - Résumez les points clés des conversations précédentes
-    - Utilisez des références explicites aux discussions antérieures
-    - Conservez un document d'état pour suivre la progression du projet
+   - Résumez les points clés des conversations précédentes
+   - Utilisez des références explicites aux discussions antérieures
+   - Conservez un document d'état pour suivre la progression du projet
 
 ---
 
 ## FIN DU GUIDE
-
 Ce document est évolutif. Référez-vous à la version la plus récente sur le dépôt Git.
 
 Version: 1.0 | Dernière mise à jour: 15 mars 2025
