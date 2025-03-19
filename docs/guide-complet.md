@@ -422,11 +422,11 @@ def compile_document(index_file, output_file):
     pass
 ```
 
-2. Script d'extraction pour Claude.ai:
+2. Script d'extraction pour Claude:
 
 ```python
 # extract_for_claude.py
-# Extrait une section pour révision avec Claude.ai
+# Extrait une section pour révision avec Claude
 import sys
 
 def extract_section(file_path, section_name):
