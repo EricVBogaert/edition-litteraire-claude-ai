@@ -5,7 +5,16 @@ Un guide méthodologique complet pour l'édition littéraire assistée par IA, c
 ## À propos de ce projet
 
 Ce projet propose une méthodologie structurée pour transformer le processus d'écriture et d'édition littéraire en tirant parti de la puissance des assistants IA (comme Claude.ai) et des outils modernes de gestion de contenu (Obsidian, VS Code). Cette approche est particulièrement adaptée aux auteurs, éditeurs et créateurs de contenu souhaitant passer des outils traditionnels (comme Word) à un environnement de travail plus puissant et flexible.
+## Collaboration avec Claude.ai
 
+Pour optimiser vos interactions avec Claude.ai et ce guide, consultez notre [directive d'utilisation collaborative](./docs/directive-utilisation-claude.md). Ce document explique en détail:
+
+- Comment présenter efficacement ce guide à Claude.ai
+- Les méthodes recommandées pour organiser vos sessions de travail
+- Comment Claude.ai peut interpréter et appliquer la méthodologie
+- Un exemple concret d'une session de travail utilisant ce guide
+
+Cette directive est essentielle pour créer un environnement de travail synergique entre vous, Claude.ai et la méthodologie du Project Knowledge.
 ## Comment utiliser ce guide avec Claude.ai
 
 Ce guide est conçu pour être utilisé **en collaboration directe avec Claude.ai**. Vous pouvez:
