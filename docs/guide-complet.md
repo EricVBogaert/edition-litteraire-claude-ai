@@ -6,50 +6,50 @@
 
 ## Table des matières
 
-- [DIRECTIVE D'UTILISATION](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#directive-dutilisation)
-    - [Système de navigation par tags](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#syst%C3%A8me-de-navigation-par-tags)
-- [1. VUE D'ENSEMBLE DU WORKFLOW](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#1-vue-densemble-du-workflow)
-    - [Avantages clés de ce workflow](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#avantages-cl%C3%A9s-de-ce-workflow)
-- [2. PRÉPARATION DE L'ENVIRONNEMENT](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#2-pr%C3%A9paration-de-lenvironnement)
-    - [Installation des outils](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#installation-des-outils)
-    - [Configuration du dépôt Git](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#configuration-du-d%C3%A9p%C3%B4t-git)
-- [3. STRUCTURE DU PROJECT KNOWLEDGE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#3-structure-du-project-knowledge)
-    - [Organisation des fichiers](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#organisation-des-fichiers)
-    - [Document index](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#document-index)
-- [4. UTILISATION DE CLAUDE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#4-utilisation-de-claude)
-    - [Organisation en projets Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#organisation-en-projets-claude)
-    - [Importation de documents GitHub](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#importation-de-documents-github)
-    - [Initialisation du projet](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#initialisation-du-projet)
-    - [Sessions de brainstorming](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#sessions-de-brainstorming)
-    - [Gestion des limitations de session](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#gestion-des-limitations-de-session)
-    - [Révision de contenu](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#r%C3%A9vision-de-contenu)
-    - [Stockage des interactions](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#stockage-des-interactions)
-- [5. WORKFLOW OBSIDIAN](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#5-workflow-obsidian)
-    - [Création de la structure](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#cr%C3%A9ation-de-la-structure)
-    - [Gestion des personnages et éléments](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#gestion-des-personnages-et-%C3%A9l%C3%A9ments)
-    - [Navigation par graphe](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#navigation-par-graphe)
-- [6. INTÉGRATION VS CODE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#6-int%C3%A9gration-vs-code)
-    - [Configuration optimale](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#configuration-optimale)
-    - [Scripts d'automatisation](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#scripts-dautomatisation)
-    - [Options multiplateforme](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#options-multiplateforme)
-- [6.1 GESTION DE LA TYPOGRAPHIE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#61-gestion-de-la-typographie)
-    - [Typographie française avancée](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#typographie-fran%C3%A7aise-avanc%C3%A9e)
-    - [Outils de vérification typographique](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#outils-de-v%C3%A9rification-typographique)
-    - [Interface utilisateur pour la correction](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#interface-utilisateur-pour-la-correction)
-    - [Standards spécifiques par genre](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#standards-sp%C3%A9cifiques-par-genre)
-- [7. GÉNÉRATION DES FORMATS FINAUX](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#7-g%C3%A9n%C3%A9ration-des-formats-finaux)
-    - [HTML et site web](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#html-et-site-web)
-    - [PDF de qualité édition](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#pdf-de-qualit%C3%A9-%C3%A9dition)
-    - [Format EPUB](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#format-epub)
-- [8. BONNES PRATIQUES](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#8-bonnes-pratiques)
-    - [Versionnement](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#versionnement)
-    - [Sauvegarde](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#sauvegarde)
-    - [Collaboration](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#collaboration)
-- [9. RESSOURCES COMPLÉMENTAIRES](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#9-ressources-compl%C3%A9mentaires)
-    - [Tutoriels recommandés](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#tutoriels-recommand%C3%A9s)
-    - [Extensions et plugins utiles](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#extensions-et-plugins-utiles)
-    - [Bonnes pratiques avec Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#bonnes-pratiques-avec-claude)
-- [FIN DU GUIDE](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b#fin-du-guide)
+- [DIRECTIVE D'UTILISATION](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#directive-dutilisation)
+    - [Système de navigation par tags](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#syst%C3%A8me-de-navigation-par-tags)
+- [1. VUE D'ENSEMBLE DU WORKFLOW](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#1-vue-densemble-du-workflow)
+    - [Avantages clés de ce workflow](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#avantages-cl%C3%A9s-de-ce-workflow)
+- [2. PRÉPARATION DE L'ENVIRONNEMENT](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#2-pr%C3%A9paration-de-lenvironnement)
+    - [Installation des outils](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#installation-des-outils)
+    - [Configuration du dépôt Git](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#configuration-du-d%C3%A9p%C3%B4t-git)
+- [3. STRUCTURE DU PROJECT KNOWLEDGE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#3-structure-du-project-knowledge)
+    - [Organisation des fichiers](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#organisation-des-fichiers)
+    - [Document index](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#document-index)
+- [4. UTILISATION DE CLAUDE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#4-utilisation-de-claude)
+    - [Organisation en projets Claude](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#organisation-en-projets-claude)
+    - [Importation de documents GitHub](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#importation-de-documents-github)
+    - [Initialisation du projet](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#initialisation-du-projet)
+    - [Sessions de brainstorming](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#sessions-de-brainstorming)
+    - [Gestion des limitations de session](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#gestion-des-limitations-de-session)
+    - [Révision de contenu](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#r%C3%A9vision-de-contenu)
+    - [Stockage des interactions](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#stockage-des-interactions)
+- [5. WORKFLOW OBSIDIAN](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#5-workflow-obsidian)
+    - [Création de la structure](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#cr%C3%A9ation-de-la-structure)
+    - [Gestion des personnages et éléments](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#gestion-des-personnages-et-%C3%A9l%C3%A9ments)
+    - [Navigation par graphe](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#navigation-par-graphe)
+- [6. INTÉGRATION VS CODE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#6-int%C3%A9gration-vs-code)
+    - [Configuration optimale](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#configuration-optimale)
+    - [Scripts d'automatisation](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#scripts-dautomatisation)
+    - [Options multiplateforme](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#options-multiplateforme)
+- [6.1 GESTION DE LA TYPOGRAPHIE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#61-gestion-de-la-typographie)
+    - [Typographie française avancée](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#typographie-fran%C3%A7aise-avanc%C3%A9e)
+    - [Outils de vérification typographique](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#outils-de-v%C3%A9rification-typographique)
+    - [Interface utilisateur pour la correction](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#interface-utilisateur-pour-la-correction)
+    - [Standards spécifiques par genre](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#standards-sp%C3%A9cifiques-par-genre)
+- [7. GÉNÉRATION DES FORMATS FINAUX](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#7-g%C3%A9n%C3%A9ration-des-formats-finaux)
+    - [HTML et site web](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#html-et-site-web)
+    - [PDF de qualité édition](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#pdf-de-qualit%C3%A9-%C3%A9dition)
+    - [Format EPUB](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#format-epub)
+- [8. BONNES PRATIQUES](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#8-bonnes-pratiques)
+    - [Versionnement](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#versionnement)
+    - [Sauvegarde](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#sauvegarde)
+    - [Collaboration](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#collaboration)
+- [9. RESSOURCES COMPLÉMENTAIRES](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#9-ressources-compl%C3%A9mentaires)
+    - [Tutoriels recommandés](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#tutoriels-recommand%C3%A9s)
+    - [Extensions et plugins utiles](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#extensions-et-plugins-utiles)
+    - [Bonnes pratiques avec Claude](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#bonnes-pratiques-avec-claude)
+- [FIN DU GUIDE](https://claude.ai/chat/b8de8e0d-d500-4292-b9d7-f7d76b218040#fin-du-guide)
 
 ---
 
@@ -59,10 +59,10 @@ Ce guide documente un workflow d'édition littéraire assisté par IA combinant 
 
 ### Système de navigation par tags
 
-Ce document utilise un système de tags structurés pour faciliter la navigation et permettre à Claude de comprendre les références croisées:
+Ce document utilise un système de liens Obsidian et de tags pour faciliter la navigation et permettre les références croisées:
 
 ```
-#[NomDuConcept](TypeDeRéférence:IdentifiantSection)
+[[TypeDeRéférence/IdentifiantSection|NomDuConcept]] #TypeDeRéférence
 ```
 
 **Types de références:**
@@ -82,9 +82,9 @@ Ce document utilise un système de tags structurés pour faciliter la navigation
 
 Notre workflow d'édition littéraire combine trois outils principaux:
 
-1. **Claude** #[Claude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Assistant IA pour la révision, l'amélioration et la génération de contenu
-2. **Obsidian** #[Obsidian](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Pour l'idéation, l'organisation conceptuelle et la structure
-3. **VS Code** #[VSCode](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b) - Pour le travail technique et les intégrations
+1. **Claude** [[Outil/IA01|Claude]] #Outil - Assistant IA pour la révision, l'amélioration et la génération de contenu
+2. **Obsidian** [[Outil/ED01|Obsidian]] #Outil - Pour l'idéation, l'organisation conceptuelle et la structure
+3. **VS Code** [[Outil/ED02|VSCode]] #Outil - Pour le travail technique et les intégrations
 
 Le flux de travail se décompose en 6 phases principales:
 
@@ -109,7 +109,7 @@ graph TD
 
 ## 2. PRÉPARATION DE L'ENVIRONNEMENT
 
-### Installation des outils #[Installation](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Installation des outils [[Workflow/PREP01|Installation]] #Workflow
 
 1. **Claude**
     
@@ -133,7 +133,7 @@ graph TD
         - GitLens
         - Paste Image
 
-### Configuration du dépôt Git #[GitSetup](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Configuration du dépôt Git [[Workflow/PREP02|GitSetup]] #Workflow
 
 1. Créez un nouveau dépôt Git local:
     
@@ -154,7 +154,7 @@ graph TD
 
 ## 3. STRUCTURE DU PROJECT KNOWLEDGE
 
-### Organisation des fichiers #[Structure](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Organisation des fichiers [[Structure/ORG01|Structure]] #Structure
 
 ```
 mon-projet-litteraire/
@@ -167,7 +167,7 @@ mon-projet-litteraire/
 └── export/                 # Fichiers générés
 ```
 
-### Document index #[IndexDoc](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Document index [[Structure/ORG02|IndexDoc]] #Structure
 
 Le fichier `index.md` sert de point d'entrée et contient:
 
@@ -202,7 +202,7 @@ Exemple:
 
 ## 4. UTILISATION DE CLAUDE
 
-### Organisation en projets Claude #[ProjetsClaude](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Organisation en projets Claude [[IA/CLAUDE00|ProjetsClaude]] #IA
 
 Structurez votre travail efficacement sur Claude:
 
@@ -227,7 +227,7 @@ Structurez votre travail efficacement sur Claude:
     ```
     
 
-### Importation de documents GitHub #[ImportGitHub](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Importation de documents GitHub [[IA/CLAUDE01|ImportGitHub]] #IA
 
 Claude peut importer directement des documents depuis GitHub:
 
@@ -248,7 +248,7 @@ Claude peut importer directement des documents depuis GitHub:
     - Utilisez des commentaires dans les fichiers pour guider Claude
     - Référez-vous à des lignes ou sections spécifiques dans vos prompts
 
-### Initialisation du projet #[InitProjet](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Initialisation du projet [[IA/CLAUDE02|InitProjet]] #IA
 
 Pour initialiser Claude avec votre projet:
 
@@ -268,7 +268,7 @@ la cohérence des personnages et le style d'écriture,
 qui devrait être [caractéristiques du style].
 ```
 
-### Sessions de brainstorming #[Brainstorming](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Sessions de brainstorming [[IA/CLAUDE03|Brainstorming]] #IA
 
 Utilisez Claude pour explorer de nouvelles idées:
 
@@ -284,7 +284,7 @@ Voici ce que j'ai déjà: [description existante].
 J'aimerais explorer ses motivations et son arc narratif.
 ```
 
-### Gestion des limitations de session #[LimiteSessions](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Gestion des limitations de session [[IA/CLAUDE04|LimiteSessions]] #IA
 
 Optimisez l'utilisation de Claude malgré les limitations:
 
@@ -305,7 +305,7 @@ Optimisez l'utilisation de Claude malgré les limitations:
     - Préparez des "fiches contextuelles" réutilisables
     - Indiquez clairement où vous en étiez lors de la dernière session
 
-### Révision de contenu #[Revision](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Révision de contenu [[IA/CLAUDE05|Revision]] #IA
 
 Pour soumettre du contenu à révision:
 
@@ -326,7 +326,7 @@ J'aimerais que tu:
 3. Renforces la caractérisation du personnage principal
 ```
 
-### Stockage des interactions #[SessionsLog](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Stockage des interactions [[IA/CLAUDE06|SessionsLog]] #IA
 
 Documenter vos sessions avec Claude:
 
@@ -338,7 +338,7 @@ Documenter vos sessions avec Claude:
 
 ## 5. WORKFLOW OBSIDIAN
 
-### Création de la structure #[StructureCreation](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Création de la structure [[Workflow/OBS01|StructureCreation]] #Workflow
 
 Utilisez Obsidian pour établir la structure principale:
 
@@ -346,7 +346,7 @@ Utilisez Obsidian pour établir la structure principale:
 2. Utilisez des titres et sous-titres pour établir la hiérarchie
 3. Créez des liens vers des fichiers détaillés pour chaque section
 
-### Gestion des personnages et éléments #[ElementsGestion](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Gestion des personnages et éléments [[Workflow/OBS02|ElementsGestion]] #Workflow
 
 Créez des fiches détaillées:
 
@@ -380,7 +380,7 @@ Exemple de template personnage:
 ## Notes
 ```
 
-### Navigation par graphe #[GraphView](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Navigation par graphe [[Technique/OBS03|GraphView]] #Technique
 
 Exploitez la vue graphique d'Obsidian:
 
@@ -392,7 +392,7 @@ Exploitez la vue graphique d'Obsidian:
 
 ## 6. INTÉGRATION VS CODE
 
-### Configuration optimale #[VSCodeSetup](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Configuration optimale [[Outil/VSC01|VSCodeSetup]] #Outil
 
 Configurez VS Code pour le travail d'édition littéraire:
 
@@ -405,7 +405,7 @@ Configurez VS Code pour le travail d'édition littéraire:
 }
 ```
 
-### Scripts d'automatisation #[Scripts](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Scripts d'automatisation [[Technique/VSC02|Scripts]] #Technique
 
 Développez des scripts Python pour automatiser certaines tâches:
 
@@ -434,7 +434,7 @@ def extract_section(file_path, section_name):
     pass
 ```
 
-### Options multiplateforme #[Multiplateforme](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Options multiplateforme [[Technique/VSC03|Multiplateforme]] #Technique
 
 Pour accommoder les utilisateurs de différents environnements:
 
@@ -484,9 +484,9 @@ Pour accommoder les utilisateurs de différents environnements:
 
 ---
 
-## 6.1 GESTION DE LA TYPOGRAPHIE #[Typographie](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+## 6.1 GESTION DE LA TYPOGRAPHIE [[Workflow/TYP01|Typographie]] #Workflow
 
-### Typographie française avancée #[TypoFR](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Typographie française avancée [[Technique/TYP02|TypoFR]] #Technique
 
 La typographie française comporte des règles spécifiques à respecter:
 
@@ -504,7 +504,7 @@ La typographie française comporte des règles spécifiques à respecter:
     - Tiret cadratin (—) pour les dialogues
     - Tiret demi-cadratin (–) pour les incises
 
-### Outils de vérification typographique #[OutilsTypo](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Outils de vérification typographique [[Technique/TYP03|OutilsTypo]] #Technique
 
 1. **Grammarleck** (Python):
     
@@ -555,7 +555,7 @@ La typographie française comporte des règles spécifiques à respecter:
     ```
     
 
-### Interface utilisateur pour la correction #[InterfaceTypo](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Interface utilisateur pour la correction [[Technique/TYP04|InterfaceTypo]] #Technique
 
 Pour les utilisateurs moins techniques:
 
@@ -572,7 +572,7 @@ Pour les utilisateurs moins techniques:
     - Créez un plugin personnalisé
     - Ajoutez des commandes accessibles dans la palette d'Obsidian
 
-### Standards spécifiques par genre #[GenreTypo](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Standards spécifiques par genre [[Technique/TYP05|GenreTypo]] #Technique
 
 Configurez des préréglages pour différents genres littéraires:
 
@@ -595,7 +595,7 @@ Configurez des préréglages pour différents genres littéraires:
 
 ---
 
-## 7. GÉNÉRATION DES FORMATS FINAUX #[Export](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+## 7. GÉNÉRATION DES FORMATS FINAUX [[Workflow/EXP01|Export]] #Workflow
 
 Utilisez VS Code pour générer les formats de sortie:
 
@@ -629,7 +629,7 @@ pandoc -s document.md -o document.epub --epub-cover-image=cover.jpg
 
 ## 8. BONNES PRATIQUES
 
-### Versionnement #[Versionnement](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Versionnement [[Pratique/GIT01|Versionnement]] #Pratique
 
 1. Committez fréquemment avec des messages descriptifs
 2. Créez des branches pour les révisions majeures
@@ -639,13 +639,13 @@ pandoc -s document.md -o document.epub --epub-cover-image=cover.jpg
 git tag -a v0.1 -m "Premier jet complet"
 ```
 
-### Sauvegarde #[Sauvegarde](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Sauvegarde [[Pratique/SEC01|Sauvegarde]] #Pratique
 
 1. Configurez un dépôt Git distant (GitHub, GitLab)
 2. Poussez régulièrement vos modifications
 3. Envisagez des sauvegardes supplémentaires hors Git
 
-### Collaboration #[Collaboration](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Collaboration [[Pratique/COLLAB01|Collaboration]] #Pratique
 
 Pour travailler à plusieurs:
 
@@ -658,18 +658,18 @@ Pour travailler à plusieurs:
 
 ## 9. RESSOURCES COMPLÉMENTAIRES
 
-### Tutoriels recommandés #[Tutoriels](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Tutoriels recommandés [[Référence/TUT01|Tutoriels]] #Référence
 
 - [Guide officiel Obsidian](https://help.obsidian.md/)
 - [Markdown Guide](https://www.markdownguide.org/)
 - [Utilisation avancée de Git](https://git-scm.com/book)
 
-### Extensions et plugins utiles #[Extensions](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Extensions et plugins utiles [[Référence/EXT01|Extensions]] #Référence
 
 - Obsidian: Dataview, Admonition
 - VS Code: Code Spell Checker, Word Count
 
-### Bonnes pratiques avec Claude #[ClaudeBestPractices](https://claude.ai/chat/5c5caaa1-8368-4860-82c7-632af9c58e1b)
+### Bonnes pratiques avec Claude [[IA/CLAUDE07|ClaudeBestPractices]] #IA
 
 #### Nomenclature correcte
 
@@ -684,10 +684,10 @@ Pour travailler à plusieurs:
     
     ```markdown
     # À éviter
-    #[Concept](https://claude.ai/chat/f9fb33fd-e95d-4a5f-838c-ccc1c60df751)
+    [[https://claude.ai/chat/f9fb33fd-e95d-4a5f-838c-ccc1c60df751]]
     
     # Préférez cette approche
-    #[Concept](TypeDeRéférence:IdentifiantSection)
+    [[IA/CLAUDE01|ImportGitHub]] #IA
     ```
     
 2. **Liens pour les développeurs du guide**: Si vous développez ce guide et souhaitez référencer des conversations Claude, utilisez un fichier séparé de notes développeur ou incluez ces liens sous forme de commentaires.
