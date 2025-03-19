@@ -5,16 +5,7 @@ Un guide méthodologique complet pour l'édition littéraire assistée par IA, c
 ## À propos de ce projet
 
 Ce projet propose une méthodologie structurée pour transformer le processus d'écriture et d'édition littéraire en tirant parti de la puissance des assistants IA (comme Claude.ai) et des outils modernes de gestion de contenu (Obsidian, VS Code). Cette approche est particulièrement adaptée aux auteurs, éditeurs et créateurs de contenu souhaitant passer des outils traditionnels (comme Word) à un environnement de travail plus puissant et flexible.
-## Collaboration avec Claude.ai
 
-Pour optimiser vos interactions avec Claude.ai et ce guide, consultez notre [directive d'utilisation collaborative](./docs/directive-utilisation-claude.md). Ce document explique en détail:
-
-- Comment présenter efficacement ce guide à Claude.ai
-- Les méthodes recommandées pour organiser vos sessions de travail
-- Comment Claude.ai peut interpréter et appliquer la méthodologie
-- Un exemple concret d'une session de travail utilisant ce guide
-
-Cette directive est essentielle pour créer un environnement de travail synergique entre vous, Claude.ai et la méthodologie du Project Knowledge.
 ## Comment utiliser ce guide avec Claude.ai
 
 Ce guide est conçu pour être utilisé **en collaboration directe avec Claude.ai**. Vous pouvez:
@@ -43,7 +34,7 @@ Ce guide est conçu pour être utilisé **en collaboration directe avec Claude.a
 
 ## Documentation principale
 
-La documentation complète de ce projet est disponible dans [[docs/guide-complet|le guide complet]]. Ce guide détaillé explique:
+La documentation complète de ce projet est disponible dans [le guide complet](https://claude.ai/chat/docs/guide-complet.md). Ce guide détaillé explique:
 
 - Le workflow d'édition littéraire assisté par IA en 6 phases
 - L'utilisation combinée de Claude.ai, Obsidian et VS Code
@@ -56,9 +47,9 @@ Il s'agit du document fondateur de ce projet, initialement développé sous le n
 
 Pour commencer immédiatement, consultez nos guides spécifiques par plateforme:
 
-- [[guides-demarrage/quick-start-windows|Guide de démarrage Windows]]
-- [[guides-demarrage/quick-start-mac|Guide de démarrage macOS]]
-- [[guides-demarrage/quick-start-linux|Guide de démarrage Linux]]
+- [Guide de démarrage Windows](https://claude.ai/chat/guides-demarrage/quick-start-windows.md)
+- [Guide de démarrage macOS](https://claude.ai/chat/guides-demarrage/quick-start-mac.md)
+- [Guide de démarrage Linux](https://claude.ai/chat/guides-demarrage/quick-start-linux.md)
 
 ## Intégration avec Claude.ai
 
@@ -77,12 +68,12 @@ Pour une efficacité maximale, créez différentes conversations dans Claude.ai 
 
 ## Contributions
 
-Les contributions à ce projet sont les bienvenues. Consultez [[CONTRIBUTING|le guide de contribution]] pour les directives de participation.
+Les contributions à ce projet sont les bienvenues. Consultez [CONTRIBUTING.md](https://claude.ai/chat/CONTRIBUTING.md) pour les directives de participation.
 
 ## Licence
 
-Ce projet est distribué sous licence [précisez votre licence]. Voir le fichier [[LICENSE|LICENSE]] pour plus de détails.
+Ce projet est distribué sous licence [précisez votre licence]. Voir le fichier [LICENSE](https://claude.ai/chat/LICENSE) pour plus de détails.
 
 ---
 
-_Ce projet est en évolution constante. Dernière mise à jour: Mars 2025_
+_Ce projet est en évolution constante. Dernière mise à jour: [Date]_
