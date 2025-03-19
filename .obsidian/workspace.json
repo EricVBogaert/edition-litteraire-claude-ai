@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
+                "file": "edition-litteraire-claude-ai/docs/guide-complet.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "quick-start-windows"
+              "title": "guide-complet"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
+                "file": "edition-litteraire-claude-ai/docs/guide-complet.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Rétrolien pour quick-start-windows"
+              "title": "Rétrolien pour guide-complet"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
+                "file": "edition-litteraire-claude-ai/docs/guide-complet.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Liens sortants de quick-start-windows"
+              "title": "Liens sortants de guide-complet"
             }
           },
           {
@@ -142,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
+                "file": "edition-litteraire-claude-ai/docs/guide-complet.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Plan de quick-start-windows"
+              "title": "Plan de guide-complet"
             }
           }
         ]
@@ -171,7 +171,10 @@
   },
   "active": "13cdda630752d7af",
   "lastOpenFiles": [
+    "edition-litteraire-claude-ai/docs/guide-complet.md.md",
+    "edition-litteraire-claude-ai/docs/guide-complet.md",
     "README.md",
+    "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
     "edition-litteraire-claude-ai/ressources/bibliographie",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/markdown-guide.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/git-commands.md",
@@ -191,12 +194,10 @@
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux-avance.md",
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-linux.md",
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-mac.md",
-    "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
     "edition-litteraire-claude-ai/docs/ressources-externes.md",
     "edition-litteraire-claude-ai/docs/glossaire.md",
     "edition-litteraire-claude-ai/docs/faq.md",
     "edition-litteraire-claude-ai/docs/conceptes-cles.md",
-    "edition-litteraire-claude-ai/docs/guide-complet.md",
     "edition-litteraire-claude-ai/CONTRIBUTING.md",
     "edition-litteraire-claude-ai/README.md"
   ]
