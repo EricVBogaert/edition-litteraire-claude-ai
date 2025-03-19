@@ -169,6 +169,7 @@
   },
   "active": "225e33ff4adaacc9",
   "lastOpenFiles": [
+    "outils/scripts/python/init_projet_litteraire.py",
     "index.md",
     "guides-demarrage/quick-start-windows.md",
     "docs/directive-utilisation-claude.md",
@@ -203,7 +204,6 @@
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/markdown-guide.md",
     "edition-litteraire-claude-ai/ressources/cheat-sheets/git-commands.md",
-    "edition-litteraire-claude-ai/ressources/cheat-sheets/obsidian-shortcuts.md",
-    "edition-litteraire-claude-ai/ressources/cheat-sheets/claude-ai-prompts.md"
+    "edition-litteraire-claude-ai/ressources/cheat-sheets/obsidian-shortcuts.md"
   ]
 }
