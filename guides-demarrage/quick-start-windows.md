@@ -53,7 +53,7 @@ Un "vault" est l'espace de travail d'Obsidian qui contient tous vos documents et
     
 2. Activez les plugins principaux (Core plugins) suivants :
     
-    - Templates
+    - Templates (Modèles)
     - Tags (Volet des tags)
 3. Pour les plugins communautaires :
     
