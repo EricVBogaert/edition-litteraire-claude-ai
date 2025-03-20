@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "review/README.md",
                 "mode": "source",
                 "source": false
               },
@@ -164,11 +164,13 @@
       "templates:Insérer le modèle": false,
       "command-palette:Ouvrir la palette de commandes": false,
       "obsidian-kanban:Create new board": false,
-      "templater-obsidian:Templater": false
+      "templater-obsidian:Templater": false,
+      "obsidian-git:Open Git source control": false
     }
   },
   "active": "9b9927aedd07ad73",
   "lastOpenFiles": [
+    "README.md",
     "index.md",
     "templates/todo.md",
     "templates/template-test.md",
@@ -194,7 +196,6 @@
     "ressources/auteurs/Eric Van Bogaert.md",
     "references/index.md",
     "import/README.md",
-    "outil/ed02-vscode.md",
     "automation_setup.log",
     "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs",
