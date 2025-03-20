@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "3cf15294c2e6150c",
+        "id": "8b01b06a4988db0a",
         "type": "tabs",
         "children": [
           {
-            "id": "74375887d586eaaf",
+            "id": "9b9927aedd07ad73",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/guide-utilisation-todo-simple.md",
-                "mode": "preview",
-                "source": true
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "guide-utilisation-todo-simple"
+              "title": "Nouvel onglet"
             }
           }
         ]
@@ -168,12 +164,15 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "74375887d586eaaf",
+  "active": "9b9927aedd07ad73",
   "lastOpenFiles": [
+    "templates/gantt.md",
+    "templates/intervenant.md.md",
+    "templates/todo.md",
+    "docs/guide-utilisation-todo-simple.md",
+    "automation_setup.log",
     "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs/Claude.md",
-    "docs/guide-utilisation-todo-simple.md",
-    "templates/template-intervenant.md.md",
     "templates/template-test.md",
     "README.md",
     "index.md",
@@ -192,8 +191,6 @@
     "automation/scripts/bash/obsidian_askpass.sh",
     "automation/scripts/bash/create-project-structure.sh",
     "automation/scripts/python/init_projet_litteraire.py",
-    "automation/scripts/python/extract_for_claude.py",
-    "automation/scripts/python/compile.py",
     "automation/docs/README.md",
     "docs/guide-personnages-avances.md",
     "docs/ressources-externes.md",
@@ -204,7 +201,6 @@
     "review/claude_suggestions/2025-03-20-template-personnage-avance (1).md",
     "review/claude_suggestions/2025-03-20-structure-references-styles.md",
     "review/claude_suggestions/2025-03-20-structure-projet-revisee.md",
-    "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
-    "guides-demarrage/quick-start-windows.md"
+    "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md"
   ]
 }
