@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/faq.md",
+                "file": "docs/guide-personnages-avances.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "faq"
+              "title": "guide-personnages-avances"
             }
           }
         ]
@@ -169,6 +169,8 @@
   },
   "active": "225e33ff4adaacc9",
   "lastOpenFiles": [
+    "docs/faq.md",
+    "docs/guide-personnages-avances.md",
     "outils/scripts/python/init_projet_litteraire.py",
     "index.md",
     "guides-demarrage/quick-start-windows.md",
@@ -190,7 +192,6 @@
     "ressources/images",
     "ressources/bibliographie",
     "ressources/cheat-sheets",
-    "ressources",
     "modules-avances/integration-grammalecte/README.md",
     "modules-avances/analyse-stylistique/README.md",
     "guides-demarrage/quick-start-mac.md",
@@ -198,7 +199,6 @@
     "guides-demarrage/quick-start-linux-avance.md",
     "edition-litteraire-claude-ai/docs/guide-complet.md",
     "docs/glossaire.md",
-    "docs/faq.md",
     "docs/conceptes-cles.md",
     "edition-litteraire-claude-ai/docs/guide-complet.md.md",
     "edition-litteraire-claude-ai/guides-demarrage/quick-start-windows.md",
