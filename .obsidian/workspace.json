@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Untitled.md",
+                "file": "ressources/auteurs/Claude.md",
                 "mode": "source",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "Claude"
             }
           }
         ]
@@ -168,17 +168,17 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "74375887d586eaaf",
+  "active": "5e05bdc5ac74cbe2",
   "lastOpenFiles": [
-    "templates/template-test.md",
     "templates/template-intervenant.md.md",
-    "Untitled.md",
+    "ressources/auteurs/Claude.md",
+    "templates/template-test.md",
+    "README.md",
+    "index.md",
     "ressources/auteurs/Eric Van Bogaert.md",
     "Untitled 1.md",
     "templates/template-intervenant.md",
     "ressources/auteurs",
-    "index.md",
-    "README.md",
     "automation/README.md",
     "review/README.md",
     "outil/ed02-vscode.md",

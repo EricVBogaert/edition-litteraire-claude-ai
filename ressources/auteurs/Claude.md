@@ -1,7 +1,7 @@
 ---
-nom: 
-role: 
-expertise: 
+nom: Claude
+role: Développeur
+expertise: AI assistant
 tags: intervenant
 ---
 

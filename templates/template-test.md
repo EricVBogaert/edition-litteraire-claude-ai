@@ -1,3 +1,6 @@
+TODO: Non fonctionnel, ce plante... mais bon potentiel
+
+
 ---
 nom: <% tp.system.prompt("Nom de l'intervenant") %>
 role: <% tp.system.prompt("Rôle principal (Auteur, Développeur, Analyste, Relecteur, etc.)") %>
