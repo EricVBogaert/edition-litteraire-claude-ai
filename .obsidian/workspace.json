@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "15a672bb877d7bd1",
+        "id": "3cf15294c2e6150c",
         "type": "tabs",
         "children": [
           {
-            "id": "d845719cdf04589d",
+            "id": "74375887d586eaaf",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ressources/auteurs/Eric Van Bogaert.md",
-                "mode": "preview",
-                "source": false
+                "file": "Untitled.md",
+                "mode": "source",
+                "source": true
               },
               "icon": "lucide-file",
-              "title": "Eric Van Bogaert"
+              "title": "Untitled"
             }
           }
         ]
@@ -168,11 +168,14 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "d845719cdf04589d",
+  "active": "74375887d586eaaf",
   "lastOpenFiles": [
+    "templates/template-test.md",
+    "templates/template-intervenant.md.md",
     "Untitled.md",
-    "templates/template-intervenant.md",
     "ressources/auteurs/Eric Van Bogaert.md",
+    "Untitled 1.md",
+    "templates/template-intervenant.md",
     "ressources/auteurs",
     "index.md",
     "README.md",
@@ -202,9 +205,6 @@
     "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
     "guides-demarrage/quick-start-windows.md",
     "ressources/cheat-sheets/markdown-guide.md",
-    "ressources/cheat-sheets/obsidian-shortcuts.md",
-    "ressources/cheat-sheets/claude-ai-prompts.md",
-    "ressources/cheat-sheets/git-commands.md",
-    "modules-avances/integration-grammalecte/README.md"
+    "ressources/cheat-sheets/obsidian-shortcuts.md"
   ]
 }

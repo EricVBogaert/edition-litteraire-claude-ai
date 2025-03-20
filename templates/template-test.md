@@ -56,4 +56,4 @@ SORT date_completion DESC
 ## Notes additionnelles
 <% tp.system.prompt("Notes supplémentaires sur cet intervenant (optionnel)", "") %>
 
-<% await tp.file.move("/templates/" + tp.frontmatter.nom.toLowerCase().replace(/\s+/g, "-")) %>
+
