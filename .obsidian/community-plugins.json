@@ -1,5 +1,6 @@
 [
   "obsidian-outliner",
   "obsidian-kanban",
-  "templater-obsidian"
+  "templater-obsidian",
+  "obsidian-git"
 ]
