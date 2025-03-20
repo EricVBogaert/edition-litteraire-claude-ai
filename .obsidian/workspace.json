@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "55473b92195f0ccd",
+        "id": "ca44f26bb25df4bf",
         "type": "tabs",
         "children": [
           {
-            "id": "ccde5ad78b9d767f",
+            "id": "e76a93b74beebd8b",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -163,21 +163,23 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "ccde5ad78b9d767f",
+  "active": "5e05bdc5ac74cbe2",
   "lastOpenFiles": [
+    "docs/guide-personnages-avances.md",
+    "docs/ressources-externes.md",
+    "docs/guide-complet.md",
+    "docs/glossaire.md",
+    "docs/faq.md",
+    "docs/directive-utilisation-claude.md",
+    "docs/conceptes-cles.md",
     "review/claude_suggestions/2025-03-20-template-personnage-avance (1).md",
     "review/claude_suggestions/2025-03-20-structure-references-styles.md",
     "review/claude_suggestions/2025-03-20-structure-projet-revisee.md",
     "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
-    "docs/guide-personnages-avances.md",
-    "docs/faq.md",
     "outils/scripts/python/init_projet_litteraire.py",
     "index.md",
     "guides-demarrage/quick-start-windows.md",
-    "docs/directive-utilisation-claude.md",
     "README.md",
-    "docs/guide-complet.md",
-    "docs/ressources-externes.md",
     "outil/ed02-vscode.md",
     "outil",
     "templates/roman",
@@ -198,8 +200,6 @@
     "guides-demarrage/quick-start-linux.md",
     "guides-demarrage/quick-start-linux-avance.md",
     "edition-litteraire-claude-ai/docs/guide-complet.md",
-    "docs/glossaire.md",
-    "docs/conceptes-cles.md",
     "edition-litteraire-claude-ai/docs/guide-complet.md.md"
   ]
 }
