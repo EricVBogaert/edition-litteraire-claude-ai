@@ -11,10 +11,14 @@
             "id": "d845719cdf04589d",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "ressources/auteurs/Eric Van Bogaert.md",
+                "mode": "preview",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "Eric Van Bogaert"
             }
           }
         ]
@@ -167,6 +171,8 @@
   "active": "d845719cdf04589d",
   "lastOpenFiles": [
     "templates/template-intervenant.md",
+    "ressources/auteurs/Eric Van Bogaert.md",
+    "ressources/auteurs",
     "index.md",
     "README.md",
     "automation/README.md",
@@ -182,7 +188,6 @@
     "automation/scripts/python/init_projet_litteraire.py",
     "automation/scripts/python/extract_for_claude.py",
     "automation/scripts/python/compile.py",
-    "automation/scripts/python/auto_typography.py",
     "automation/docs/README.md",
     "docs/guide-personnages-avances.md",
     "docs/ressources-externes.md",
@@ -200,7 +205,6 @@
     "ressources/cheat-sheets/claude-ai-prompts.md",
     "ressources/cheat-sheets/git-commands.md",
     "modules-avances/integration-grammalecte/README.md",
-    "modules-avances/analyse-stylistique/README.md",
-    "guides-demarrage/quick-start-mac.md"
+    "modules-avances/analyse-stylistique/README.md"
   ]
 }
