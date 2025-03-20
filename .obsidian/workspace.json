@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "ressources/auteurs/Claude.md",
-                "mode": "source",
+                "file": "docs/guide-utilisation-todo-simple.md",
+                "mode": "preview",
                 "source": true
               },
               "icon": "lucide-file",
-              "title": "Claude"
+              "title": "guide-utilisation-todo-simple"
             }
           }
         ]
@@ -168,10 +168,12 @@
       "templater-obsidian:Templater": false
     }
   },
-  "active": "5e05bdc5ac74cbe2",
+  "active": "74375887d586eaaf",
   "lastOpenFiles": [
-    "templates/template-intervenant.md.md",
+    "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs/Claude.md",
+    "docs/guide-utilisation-todo-simple.md",
+    "templates/template-intervenant.md.md",
     "templates/template-test.md",
     "README.md",
     "index.md",
@@ -203,8 +205,6 @@
     "review/claude_suggestions/2025-03-20-structure-references-styles.md",
     "review/claude_suggestions/2025-03-20-structure-projet-revisee.md",
     "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
-    "guides-demarrage/quick-start-windows.md",
-    "ressources/cheat-sheets/markdown-guide.md",
-    "ressources/cheat-sheets/obsidian-shortcuts.md"
+    "guides-demarrage/quick-start-windows.md"
   ]
 }
