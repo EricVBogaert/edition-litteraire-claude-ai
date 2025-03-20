@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "README.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "index"
             }
           }
         ]
@@ -169,6 +169,7 @@
   },
   "active": "e76a93b74beebd8b",
   "lastOpenFiles": [
+    "README.md",
     "index.md",
     "automation/README.md",
     "review/README.md",
@@ -196,7 +197,6 @@
     "review/claude_suggestions/2025-03-20-structure-projet-revisee.md",
     "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
     "guides-demarrage/quick-start-windows.md",
-    "README.md",
     "ressources/cheat-sheets/markdown-guide.md",
     "ressources/cheat-sheets/obsidian-shortcuts.md",
     "ressources/cheat-sheets/claude-ai-prompts.md",
