@@ -11,10 +11,14 @@
             "id": "e76a93b74beebd8b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "README.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "README"
             }
           }
         ]
@@ -163,11 +167,14 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "5e05bdc5ac74cbe2",
+  "active": "e76a93b74beebd8b",
   "lastOpenFiles": [
-    "automation/scripts/python/setup-automation-folder.py",
-    "review/README.md",
+    "index.md",
     "automation/README.md",
+    "review/README.md",
+    "outil/ed02-vscode.md",
+    "docs/guide-complet.md",
+    "automation/scripts/python/setup-automation-folder.py",
     "automation/scripts/js/main.js",
     "automation/scripts/bash/git-commands.sh",
     "automation/scripts/bash/compile.sh",
@@ -177,11 +184,9 @@
     "automation/scripts/python/extract_for_claude.py",
     "automation/scripts/python/compile.py",
     "automation/scripts/python/auto_typography.py",
-    "automation/scripts/python/setup.py",
     "automation/docs/README.md",
     "docs/guide-personnages-avances.md",
     "docs/ressources-externes.md",
-    "docs/guide-complet.md",
     "docs/glossaire.md",
     "docs/faq.md",
     "docs/directive-utilisation-claude.md",
@@ -190,10 +195,8 @@
     "review/claude_suggestions/2025-03-20-structure-references-styles.md",
     "review/claude_suggestions/2025-03-20-structure-projet-revisee.md",
     "review/claude_suggestions/2025-03-20-structure-scripts-automation-001.md",
-    "index.md",
     "guides-demarrage/quick-start-windows.md",
     "README.md",
-    "outil/ed02-vscode.md",
     "ressources/cheat-sheets/markdown-guide.md",
     "ressources/cheat-sheets/obsidian-shortcuts.md",
     "ressources/cheat-sheets/claude-ai-prompts.md",
