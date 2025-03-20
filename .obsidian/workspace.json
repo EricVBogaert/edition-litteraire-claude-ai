@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "6638e6b0a82072fc",
+        "id": "6040ca3a6878fcc7",
         "type": "tabs",
         "children": [
           {
-            "id": "225e33ff4adaacc9",
+            "id": "ef2d9fb5b8e3165a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "docs/guide-personnages-avances.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "guide-personnages-avances"
+              "title": "Nouvel onglet"
             }
           }
         ]
@@ -167,10 +163,10 @@
       "obsidian-kanban:Create new board": false
     }
   },
-  "active": "225e33ff4adaacc9",
+  "active": "ef2d9fb5b8e3165a",
   "lastOpenFiles": [
-    "docs/faq.md",
     "docs/guide-personnages-avances.md",
+    "docs/faq.md",
     "outils/scripts/python/init_projet_litteraire.py",
     "index.md",
     "guides-demarrage/quick-start-windows.md",
