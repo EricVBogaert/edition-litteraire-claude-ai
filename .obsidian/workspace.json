@@ -11,10 +11,14 @@
             "id": "9385c7038e87d88f",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "Intégration de l'API Claude.ai avec d'autres services"
             }
           }
         ]
@@ -166,6 +170,8 @@
   },
   "active": "9385c7038e87d88f",
   "lastOpenFiles": [
+    "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
+    "review/pending/claude.ai",
     "review/pending/python-gui-comparison.md",
     "review/README.md",
     "README.md",
@@ -191,7 +197,6 @@
     "ressources/cheat-sheets/claude-ai-prompts.md",
     "ressources/auteurs/Claude.md",
     "ressources/auteurs/Eric Van Bogaert.md",
-    "references/index.md",
     "automation_setup.log",
     "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs",
@@ -200,7 +205,6 @@
     "automation/scripts/bash/git-commands.sh",
     "automation/scripts/bash/compile.sh",
     "automation/scripts/bash/obsidian_askpass.sh",
-    "automation/scripts/bash/create-project-structure.sh",
-    "automation/scripts/python/init_projet_litteraire.py"
+    "automation/scripts/bash/create-project-structure.sh"
   ]
 }
