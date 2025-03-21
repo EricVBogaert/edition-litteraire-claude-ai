@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Desktop</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+    }
+    
+    #sidebar {
+      width: 250px;
+      background-color: #f0f0f0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    #content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+    
+    #messagesList {
+      flex: 1;
+      overflow-y: auto;
+      margin-bottom: 20px;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    
+    .user-message {
+      background-color: #e1f5fe;
+      align-self: flex-end;
+    }
+    
+    .assistant-message {
+      background-color: #f1f1f1;
+      align-self: flex-start;
+    }
+    
+    #inputArea {
+      display: flex;
+      height: 100px;
+    }
+    
+    #messageInput {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 5px;
+      resize: none;
+    }
+    
+    #sendButton {
+      margin-left: 10px;
+      padding: 10px 20px;
+      background-color: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .session-item {
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: #e0e0e0;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .session-item.active {
+      background-color: #4285f4;
+      color: white;
+    }
+    
+    #newSessionBtn {
+      margin-top: auto;
+      padding: 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    .token-info {
+      font-size: 0.8em;
+      color: #757575;
+      margin-top: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h2>Sessions</h2>
+    <div id="sessionsList"></div>
+    <button id="newSessionBtn">Nouvelle Session</button>
+  </div>
+  
+  <div id="content">
+    <h2 id="sessionTitle">Sélectionnez une session</h2>
+    <div id="messagesList"></div>
+    <div id="inputArea">
+      <textarea id="messageInput" placeholder="Entrez votre message..." disabled></textarea>
+      <button id="sendButton" disabled>Envoyer</button>
+    </div>
+  </div>
+
+  <script>
+    // Variables globales
+    let currentSessionId = null;
+    
+    // Éléments DOM
+    const sessionsListEl = document.getElementById('sessionsList');
+    const messagesListEl = document.getElementById('messagesList');
+    const messageInputEl = document.getElementById('messageInput');
+    const sendButtonEl = document.getElementById('sendButton');
+    const newSessionBtnEl = document.getElementById('newSessionBtn');
+    const sessionTitleEl = document.getElementById('sessionTitle');
+    
+    // Fonctions d'initialisation
+    async function init() {
+      await loadSessions();
+      setupEventListeners();
+    }
+    
+    // Chargement des sessions
+    async function loadSessions() {
+      try {
+        const sessions = await window.claudeAPI.listSessions();
+        
+        sessionsListEl.innerHTML = '';
+        sessions.forEach(sessionId => {
+          const sessionEl = document.createElement('div');
+          sessionEl.className = 'session-item';
+          sessionEl.textContent = `Session ${sessionId.split('_')[1]}`;
+          sessionEl.dataset.id = sessionId;
+          sessionsListEl.appendChild(sessionEl);
+        });
+      } catch (err) {
+        console.error("Erreur lors du chargement des sessions:", err);
+      }
+    }
+    
+    // Configuration des événements
+    function setupEventListeners() {
+      // Événement de création d'une nouvelle session
+      newSessionBtnEl.addEventListener('click', async () => {
+        try {
+          const sessionId = await window.claudeAPI.createSession();
+          await loadSessions();
+          selectSession(sessionId);
+        } catch (err) {
+          console.error("Erreur lors de la création de la session:", err);
+        }
+      });
+      
+      // Événement de sélection d'une session
+      sessionsListEl.addEventListener('click', event => {
+        const sessionEl = event.target.closest('.session-item');
+        if (sessionEl) {
+          selectSession(sessionEl.dataset.id);
+        }
+      });
+      
+      // Événement d'envoi d'un message
+      sendButtonEl.addEventListener('click', sendMessage);
+      messageInputEl.addEventListener('keypress', event => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          sendMessage();
+        }
+      });
+    }
+    
+    // Sélection d'une session
+    async function selectSession(sessionId) {
+      try {
+        // Mettre à jour l'UI
+        currentSessionId = sessionId;
+        
+        const sessionEls = document.querySelectorAll('.session-item');
+        sessionEls.forEach(el => {
+          el.classList.toggle('active', el.dataset.id === sessionId);
+        });
+        
+        sessionTitleEl.textContent = `Session ${sessionId.split('_')[1]}`;
+        messageInputEl.disabled = false;
+        sendButtonEl.disabled = false;
+        
+        // Charger les messages
+        const session = await window.claudeAPI.getSession(sessionId);
+        if (session && session.messages) {
+          displayMessages(session.messages);
+        } else {
+          messagesListEl.innerHTML = '<div class="empty-state">Nouvelle conversation. Envoyez un message pour commencer.</div>';
+        }
+      } catch (err) {
+        console.error(`Erreur lors de la sélection de la session ${sessionId}:`, err);
+      }
+    }
+    
+    // Affichage des messages
+    function displayMessages(messages) {
+      messagesListEl.innerHTML = '';
+      
+      messages.forEach(msg => {
+        const messageEl = document.createElement('div');
+        messageEl.className = `message ${msg.role}-message`;
+        
+        // Contenu du message
+        const contentEl = document.createElement('div');
+        contentEl.className = 'message-content';
+        contentEl.textContent = msg.content;
+        messageEl.appendChild(contentEl);
+        
+        messagesListEl.appendChild(messageEl);
+      });
+      
+      // Scroll vers le bas
+      messagesListEl.scrollTop = messagesListEl.scrollHeight;
+    }
+    
+    // Envoi d'un message
+    async function sendMessage() {
+      const message = messageInputEl.value.trim();
+      if (!message || !currentSessionId) return;
+      
+      try {
+        // Désactiver l'input pendant l'envoi
+        messageInputEl.disabled = true;
+        sendButtonEl.disabled = true;
+        
+        // Afficher immédiatement le message de l'utilisateur
+        const userMessageEl = document.createElement('div');
+        userMessageEl.className = 'message user-message';
+        userMessageEl.textContent = message;
+        messagesListEl.appendChild(userMessageEl);
+        messagesListEl.scrollTop = messagesListEl.scrollHeight;
+        
+        // Vider l'input
+        messageInputEl.value = '';
+        
+        // Indiquer que Claude réfléchit
+        const thinkingEl = document.createElement('div');
+        thinkingEl.className = 'message assistant-message';
+        thinkingEl.textContent = 'Claude réfléchit...';
+        messagesListEl.appendChild(thinkingEl);
+        
+        // Envoyer le message à Claude
+        const response = await window.claudeAPI.sendMessage(currentSessionId, message);
+        
+        // Remplacer l'indicateur de réflexion par la réponse
+        thinkingEl.textContent = response.message;
+        
+        // Ajouter les infos de tokens
+        const tokenInfoEl = document.createElement('div');
+        tokenInfoEl.className = 'token-info';
+        tokenInfoEl.textContent = `Tokens: Entrée ${response.usage.inputTokens}, Sortie ${response.usage.outputTokens}`;
+        thinkingEl.appendChild(tokenInfoEl);
+        
+        // Réactiver l'input
+        messageInputEl.disabled = false;
+        sendButtonEl.disabled = false;
+        messageInputEl.focus();
+      } catch (err) {
+        console.error("Erreur lors de l'envoi du message:", err);
+        messageInputEl.disabled = false;
+        sendButtonEl.disabled = false;
+      }
+    }
+    
+    // Lancer l'application
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
