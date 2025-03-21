@@ -11,10 +11,14 @@
             "id": "8b781e30e61e94f7",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "review/in_progress/README.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "README"
             }
           }
         ]
@@ -166,6 +170,7 @@
   },
   "active": "8b781e30e61e94f7",
   "lastOpenFiles": [
+    "review/in_progress/README.md",
     "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
     "review/pending/claude.ai/context-compression.py",
     "review/pending/claude.ai",
