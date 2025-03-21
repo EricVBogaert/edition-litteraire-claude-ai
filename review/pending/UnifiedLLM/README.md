@@ -1,4 +1,19 @@
 en cours de propositions
+
+
+Bien qu'il n'existe pas de module Python officiellement nommé "UnifiedLLM" au moment de ma dernière mise à jour, il existe plusieurs bibliothèques Python qui offrent une fonctionnalité similaire en fournissant une interface unifiée pour interagir avec différents modèles de langage (LLMs) de divers fournisseurs. Ces bibliothèques visent à simplifier le processus de travail avec plusieurs LLMs en offrant une API cohérente.
+
+Voici quelques exemples de modules Python qui pourraient correspondre à ce que vous recherchez :
+
+- **LiteLLM :** C'est une bibliothèque populaire qui fournit un client Python et un proxy compatible avec l'API OpenAI pour accéder à plus de 100 LLMs différents. Elle permet de changer facilement de modèle entre différents fournisseurs et offre des fonctionnalités supplémentaires comme le suivi des coûts, la gestion des erreurs et la journalisation.
+- **AISuite :** Une autre bibliothèque open source qui propose une API unifiée pour interagir avec plusieurs fournisseurs de LLMs tels qu'OpenAI, Anthropic, Azure, Google, AWS, Groq, Mistral, HuggingFace et Ollama.
+- **LLM Master (L2M2) :** Cette bibliothèque Python vise à fournir une interface unifiée pour interagir avec plusieurs LLMs et modèles d'IA génératifs multimédias de différents fournisseurs.
+
+Ces bibliothèques permettent aux développeurs de :
+
+- **Écrire du code qui peut fonctionner avec différents LLMs** sans avoir à se soucier des détails spécifiques de l'API de chaque fournisseur.
+- **Tester et comparer facilement les performances de différents modèles** pour une tâche donnée.
+- **Basculer entre les modèles** en fonction des besoins ou des coûts
 # Création d'une bibliothèque Python pour utiliser Claude et LMStudio de façon transparente
 
 Pour créer une bibliothèque Python qui permet d'utiliser de façon transparente à la fois l'API Claude d'Anthropic et LMStudio, ainsi que d'autre API IA potentiel
