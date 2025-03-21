@@ -11,10 +11,14 @@
             "id": "07981f2c57abe7fb",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "Nouvel onglet"
+              "title": "Intégration de l'API Claude.ai avec d'autres services"
             }
           }
         ]
@@ -166,6 +170,7 @@
   },
   "active": "07981f2c57abe7fb",
   "lastOpenFiles": [
+    "review/pending/claude.ai/context-compression.py",
     "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
     "review/pending/claude.ai",
     "review/pending/python-gui-comparison.md",
@@ -192,7 +197,6 @@
     "ressources/cheat-sheets/git-commands.md",
     "ressources/cheat-sheets/claude-ai-prompts.md",
     "ressources/auteurs/Claude.md",
-    "ressources/auteurs/Eric Van Bogaert.md",
     "automation_setup.log",
     "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs",
