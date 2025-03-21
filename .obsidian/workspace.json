@@ -4,16 +4,16 @@
     "type": "split",
     "children": [
       {
-        "id": "305cafe0ef9f602e",
+        "id": "843772f84316cfd4",
         "type": "tabs",
         "children": [
           {
-            "id": "8b781e30e61e94f7",
+            "id": "f26d9e5230c6d60e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "review/in_progress/README.md",
+                "file": "review/pending/UnifiedLLM/README.md",
                 "mode": "source",
                 "source": false
               },
@@ -168,13 +168,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "8b781e30e61e94f7",
+  "active": "f26d9e5230c6d60e",
   "lastOpenFiles": [
     "review/in_progress/README.md",
+    "review/pending/UnifiedLLM/README.md",
+    "review/pending/UnifiedLLM",
     "review/pending/claude.ai/Intégration de l'API Claude.ai avec d'autres services.md",
+    "review/pending/python-gui-comparison.md",
     "review/pending/claude.ai/context-compression.py",
     "review/pending/claude.ai",
-    "review/pending/python-gui-comparison.md",
     "review/README.md",
     "README.md",
     "index.md",
@@ -197,14 +199,12 @@
     "ressources/cheat-sheets/markdown-guide.md",
     "ressources/cheat-sheets/git-commands.md",
     "ressources/cheat-sheets/claude-ai-prompts.md",
-    "ressources/auteurs/Claude.md",
     "automation_setup.log",
     "automation/scripts/python/script-init-todo.py",
     "ressources/auteurs",
     "automation/scripts/python/setup-automation-folder.py",
     "automation/scripts/js/main.js",
     "automation/scripts/bash/git-commands.sh",
-    "automation/scripts/bash/compile.sh",
-    "automation/scripts/bash/obsidian_askpass.sh"
+    "automation/scripts/bash/compile.sh"
   ]
 }

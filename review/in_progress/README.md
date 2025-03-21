@@ -13,4 +13,7 @@ Tel que un monitoring des *Token* utilise d'une API externe.
  Un monitoring du fonctionnement du traitement des évènements.
  Un syslog genre unix, avec des vue  vers un rsyslog
  Une interaction avec un API IA
-Le traitement de RPC (RPCJson et ou RES)
+Le traitement de RPC (RPCJson et ou REST API)
+
+Directive:
+FastAPI sera préféré a Flask. La combinaison pywebview + Flask + Webix devenant pywebview + FastAPI + Webix + UnifiedLLM(module a développer)
