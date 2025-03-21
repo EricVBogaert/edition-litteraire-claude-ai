@@ -962,8 +962,7 @@ def main():
     # Vérifier qu'il s'agit bien d'un projet littéraire
     if not (project_path / "index.md").exists() and not (project_path / "README.md").exists():
         logger.warning(f"Ce dossier ne semble pas être un projet littéraire (index.md ou README.md manquants): {project_path}")
-        auto_confirm = hasattr(args, 'yes') and args.yes
-        if not auto_confirm:
+        if not args.yes:
             confirm = input("Continuer quand même? [y/N]: ").strip().lower()
             if confirm not in ('y', 'yes', 'oui'):
                 logger.info("Opération annulée.")
@@ -1005,8 +1004,7 @@ def main():
         logger.info("Mode de correction automatique activé. Correction des problèmes simples...")
         
         # Demander confirmation avant de procéder aux modifications
-        auto_confirm = hasattr(args, 'yes') and args.yes
-        if not auto_confirm:
+        if not args.yes:
             print("\nLes modifications suivantes seront effectuées:")
             print(f"- Création de répertoires manquants ({sum(1 for i in all_issues if i['type'] == 'missing_required' and '.md' not in i['path'])})")
             print(f"- Création de templates manquants ({sum(1 for i in all_issues if i['type'] == 'missing_template')})")
@@ -1036,7 +1034,7 @@ def main():
         logger.info(f"{index_files_created} fichiers index.md créés.")
         
         # 4. Corriger les liens cassés simples
-        links_fixed = fix_broken_links(project_path, all_issues, not (hasattr(args, 'yes') and args.yes))
+        links_fixed = fix_broken_links(project_path, all_issues, not args.yes)
         logger.info(f"{links_fixed} liens cassés corrigés.")
         
         # Refaire une vérification pour voir les problèmes restants
