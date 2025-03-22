@@ -16,4 +16,4 @@ Tel que un monitoring des *Token* utilise d'une API externe.
 Le traitement de RPC (RPCJson et ou REST API)
 
 Directive:
-FastAPI sera préféré a Flask. La combinaison pywebview + Flask + Webix devenant pywebview + FastAPI + Webix + UnifiedLLM(module a développer)
+FastAPI sera préféré a Flask. La combinaison pywebview + Flask + Webix devenant pywebview + FastAPI + EasyMDE + (Webix commercial) + UnifiedLLM(module a développer)
