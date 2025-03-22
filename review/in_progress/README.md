@@ -17,5 +17,5 @@ Le traitement de RPC (RPCJson et ou REST API)
 
 Directive:
 + UnifiedLLM(module a développer)
-+ bibliotheque React 
++ bibliotheque React ? son utilisation dans claude.ai m'intrigue
 FastAPI sera préféré a Flask. La combinaison pywebview + Flask + Webix devenant pywebview + FastAPI + EasyMDE + **JavaScript vanilla** (sans aucune librairie externe comme jQuery) + (Webix commercial futur lointain et a revoir dans le context) + UnifiedLLM(module a développer)
