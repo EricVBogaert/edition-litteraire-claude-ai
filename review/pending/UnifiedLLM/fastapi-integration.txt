@@ -1,0 +1,601 @@
+#!/usr/bin/env python
+"""
+Intégration de UnifiedLLM avec architecture événementielle dans FastAPI.
+"""
+
+import asyncio
+from typing import List, Dict, Any, Optional
+import uvicorn
+from fastapi import FastAPI, BackgroundTasks, WebSocket, WebSocketDisconnect, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field
+
+# Import des modules UnifiedLLM et Event Queue
+from unified_llm_event_driven import UnifiedLLMEventDriven
+from event_queue import EventQueue, Event, EventType, get_event_queue
+
+
+# Modèles de données Pydantic
+class MessageRequest(BaseModel):
+    role: str
+    content: str
+    file_paths: List[str] = Field(default_factory=list)
+    tool_call: Optional[Dict[str, Any]] = None
+    tool_result: Optional[Dict[str, Any]] = None
+
+
+class ChatRequest(BaseModel):
+    messages: List[MessageRequest]
+    model: str
+    temperature: float = 0.7
+    max_tokens: int = 2000
+    tools: List[Dict[str, Any]] = Field(default_factory=list)
+    provider: Optional[str] = None
+
+
+class EmbedRequest(BaseModel):
+    text: str
+    model: Optional[str] = None
+    provider: Optional[str] = None
+
+
+class ChatResponse(BaseModel):
+    response: str
+    request_id: str
+    provider: str
+
+
+class EmbedResponse(BaseModel):
+    embeddings: List[float]
+    dimensions: int
+    request_id: str
+    provider: str
+
+
+class EventLogEntry(BaseModel):
+    timestamp: float
+    type: str
+    source: str
+    data: Dict[str, Any]
+    id: str
+
+
+# Création de l'application FastAPI
+app = FastAPI(
+    title="UnifiedLLM API",
+    description="API RESTful pour UnifiedLLM avec architecture événementielle",
+    version="1.0.0",
+)
+
+# Configuration CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# État global
+# Dans une vraie application, ce serait stocké dans une base de données ou un cache
+active_connections = {}
+event_log = []
+MAX_LOG_ENTRIES = 1000
+
+# Obtenir la file d'événements
+event_queue = get_event_queue()
+
+
+# Fonction pour obtenir l'instance UnifiedLLM
+def get_llm():
+    """
+    Factory pour obtenir ou créer une instance UnifiedLLM.
+    Dans une vraie application, cela pourrait être un singleton global 
+    ou une instance par utilisateur.
+    """
+    return UnifiedLLMEventDriven(event_queue=event_queue)
+
+
+# Écoute globale des événements pour les logs
+@app.on_event("startup")
+async def startup_event():
+    """Configuration initiale lors du démarrage de l'application."""
+    # Enregistrer un gestionnaire d'événements pour les logs
+    event_queue.register_async_handler(
+        EventType.LOG_INFO, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.LOG_WARNING, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.LOG_ERROR, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.LOG_DEBUG, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.CHAT_REQUEST, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.CHAT_RESPONSE, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.EMBED_REQUEST, log_event_handler, "fastapi_app"
+    )
+    event_queue.register_async_handler(
+        EventType.EMBED_RESPONSE, log_event_handler, "fastapi_app"
+    )
+    
+    # Démarrer le traitement asynchrone des événements
+    asyncio.create_task(event_queue.process_events_async())
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Nettoyage lors de l'arrêt de l'application."""
+    # Arrêter la file d'événements
+    event_queue.stop()
+    
+    # Désenregistrer les gestionnaires
+    event_queue.unregister_subscriber("fastapi_app")
+
+
+async def log_event_handler(event: Event):
+    """
+    Gestionnaire pour enregistrer les événements dans le log.
+    
+    Args:
+        event: Événement à enregistrer
+    """
+    global event_log
+    
+    # Ajouter l'événement au log
+    event_log.append({
+        "timestamp": event.timestamp,
+        "type": event.type.name,
+        "source": event.source,
+        "data": event.data,
+        "id": event.id,
+    })
+    
+    # Limiter la taille du log
+    if len(event_log) > MAX_LOG_ENTRIES:
+        event_log = event_log[-MAX_LOG_ENTRIES:]
+    
+    # Envoyer l'événement aux clients WebSocket connectés
+    for connection_id, websocket in active_connections.items():
+        try:
+            await websocket.send_json({
+                "event": "log",
+                "data": {
+                    "timestamp": event.timestamp,
+                    "type": event.type.name,
+                    "source": event.source,
+                    "id": event.id,
+                    "data": event.data,
+                }
+            })
+        except Exception:
+            # Ignorer les erreurs de connexion
+            pass
+
+
+# Routes API REST
+@app.post("/chat", response_model=ChatResponse)
+async def chat_endpoint(request: ChatRequest, llm: UnifiedLLMEventDriven = Depends(get_llm)):
+    """
+    Point d'entrée pour les requêtes de chat.
+    
+    Args:
+        request: Requête de chat
+        llm: Instance UnifiedLLM
+        
+    Returns:
+        Réponse de chat
+    """
+    # Changer le fournisseur si demandé
+    if request.provider and request.provider != llm.get_provider():
+        try:
+            llm.set_provider(request.provider)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+    
+    # Convertir les messages
+    messages = [
+        llm.create_message(
+            role=msg.role,
+            content=msg.content,
+            file_paths=msg.file_paths,
+            tool_call=msg.tool_call,
+            tool_result=msg.tool_result
+        )
+        for msg in request.messages
+    ]
+    
+    # Créer la configuration
+    from unified_llm_base import ModelConfig
+    config = ModelConfig(
+        model_name=request.model,
+        temperature=request.temperature,
+        max_tokens=request.max_tokens
+    )
+    
+    # Convertir les outils
+    tools = [
+        llm.create_tool(
+            name=tool["name"],
+            description=tool.get("description", ""),
+            parameters=tool.get("parameters", {})
+        )
+        for tool in request.tools
+    ] if request.tools else None
+    
+    # Faire la requête de chat asynchrone
+    try:
+        response = await llm.chat_async(messages, config, tools)
+        
+        # Créer un ID de requête pour la réponse (normalement généré par UnifiedLLM)
+        import uuid
+        request_id = str(uuid.uuid4())
+        
+        return ChatResponse(
+            response=response,
+            request_id=request_id,
+            provider=llm.get_provider()
+        )
+    except Exception as e:
+        # Émettre un événement d'erreur
+        event_queue.emit(Event(
+            type=EventType.LOG_ERROR,
+            source="fastapi_app",
+            data={"error": str(e), "endpoint": "/chat"}
+        ))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/embed", response_model=EmbedResponse)
+async def embed_endpoint(request: EmbedRequest, llm: UnifiedLLMEventDriven = Depends(get_llm)):
+    """
+    Point d'entrée pour les requêtes d'embedding.
+    
+    Args:
+        request: Requête d'embedding
+        llm: Instance UnifiedLLM
+        
+    Returns:
+        Réponse d'embedding
+    """
+    # Changer le fournisseur si demandé
+    if request.provider and request.provider != llm.get_provider():
+        try:
+            llm.set_provider(request.provider)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+    
+    # Faire la requête d'embedding asynchrone
+    try:
+        embeddings = await llm.embed_async(request.text, request.model)
+        
+        # Créer un ID de requête pour la réponse
+        import uuid
+        request_id = str(uuid.uuid4())
+        
+        return EmbedResponse(
+            embeddings=embeddings,
+            dimensions=len(embeddings),
+            request_id=request_id,
+            provider=llm.get_provider()
+        )
+    except Exception as e:
+        # Émettre un événement d'erreur
+        event_queue.emit(Event(
+            type=EventType.LOG_ERROR,
+            source="fastapi_app",
+            data={"error": str(e), "endpoint": "/embed"}
+        ))
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.get("/providers")
+async def providers_endpoint(llm: UnifiedLLMEventDriven = Depends(get_llm)):
+    """
+    Liste les fournisseurs disponibles.
+    
+    Args:
+        llm: Instance UnifiedLLM
+        
+    Returns:
+        Liste des fournisseurs
+    """
+    return {
+        "active": llm.get_provider(),
+        "available": llm.list_providers()
+    }
+
+
+@app.get("/models")
+async def models_endpoint(provider: Optional[str] = None, llm: UnifiedLLMEventDriven = Depends(get_llm)):
+    """
+    Liste les modèles disponibles.
+    
+    Args:
+        provider: Fournisseur (optionnel)
+        llm: Instance UnifiedLLM
+        
+    Returns:
+        Liste des modèles
+    """
+    if provider and provider != llm.get_provider():
+        try:
+            llm.set_provider(provider)
+        except ValueError as e:
+            raise HTTPException(status_code=400, detail=str(e))
+    
+    return {
+        "provider": llm.get_provider(),
+        "models": llm.supported_models()
+    }
+
+
+@app.get("/events")
+async def events_endpoint(limit: int = 100):
+    """
+    Récupère les événements récents.
+    
+    Args:
+        limit: Nombre maximum d'événements à retourner
+        
+    Returns:
+        Liste d'événements
+    """
+    return {
+        "events": event_log[-limit:] if limit > 0 else event_log
+    }
+
+
+@app.get("/stats")
+async def stats_endpoint():
+    """
+    Récupère des statistiques sur la file d'événements.
+    
+    Returns:
+        Statistiques
+    """
+    return event_queue.get_queue_stats()
+
+
+# WebSocket pour le streaming des réponses de chat
+@app.websocket("/ws/chat")
+async def websocket_chat_endpoint(websocket: WebSocket):
+    """
+    Point d'entrée WebSocket pour le streaming des réponses de chat.
+    
+    Args:
+        websocket: Connexion WebSocket
+    """
+    await websocket.accept()
+    
+    # Générer un ID de connexion
+    connection_id = f"ws_{uuid.uuid4().hex}"
+    llm = UnifiedLLMEventDriven(event_queue=event_queue)
+    
+    try:
+        # Recevoir la requête initiale
+        request_data = await websocket.receive_json()
+        
+        # Valider la requête
+        try:
+            request = ChatRequest.parse_obj(request_data)
+        except Exception as e:
+            await websocket.send_json({
+                "event": "error",
+                "data": {"message": f"Invalid request: {str(e)}"}
+            })
+            return
+        
+        # Changer le fournisseur si demandé
+        if request.provider and request.provider != llm.get_provider():
+            try:
+                llm.set_provider(request.provider)
+            except ValueError as e:
+                await websocket.send_json({
+                    "event": "error",
+                    "data": {"message": str(e)}
+                })
+                return
+        
+        # Convertir les messages
+        messages = [
+            llm.create_message(
+                role=msg.role,
+                content=msg.content,
+                file_paths=msg.file_paths,
+                tool_call=msg.tool_call,
+                tool_result=msg.tool_result
+            )
+            for msg in request.messages
+        ]
+        
+        # Créer la configuration
+        from unified_llm_base import ModelConfig
+        config = ModelConfig(
+            model_name=request.model,
+            temperature=request.temperature,
+            max_tokens=request.max_tokens
+        )
+        
+        # Convertir les outils
+        tools = [
+            llm.create_tool(
+                name=tool["name"],
+                description=tool.get("description", ""),
+                parameters=tool.get("parameters", {})
+            )
+            for tool in request.tools
+        ] if request.tools else None
+        
+        # Faire la requête de chat en streaming
+        try:
+            # Enregistrer la connexion pour les logs
+            active_connections[connection_id] = websocket
+            
+            # Informer le client que le streaming commence
+            await websocket.send_json({
+                "event": "start",
+                "data": {
+                    "provider": llm.get_provider(),
+                    "model": request.model
+                }
+            })
+            
+            # Obtenir l'itérateur de streaming
+            async for fragment in await llm.chat_async(messages, config, tools, stream=True):
+                await websocket.send_json({
+                    "event": "fragment",
+                    "data": {"content": fragment}
+                })
+            
+            # Informer le client que le streaming est terminé
+            await websocket.send_json({
+                "event": "end",
+                "data": {}
+            })
+        
+        except Exception as e:
+            # Informer le client de l'erreur
+            await websocket.send_json({
+                "event": "error",
+                "data": {"message": str(e)}
+            })
+            
+            # Émettre un événement d'erreur
+            event_queue.emit(Event(
+                type=EventType.LOG_ERROR,
+                source="fastapi_app",
+                data={"error": str(e), "endpoint": "/ws/chat"}
+            ))
+    
+    except WebSocketDisconnect:
+        # Le client s'est déconnecté
+        event_queue.emit(Event(
+            type=EventType.LOG_INFO,
+            source="fastapi_app",
+            data={"message": f"Client disconnected: {connection_id}"}
+        ))
+    
+    finally:
+        # Retirer la connexion de la liste des connexions actives
+        if connection_id in active_connections:
+            del active_connections[connection_id]
+
+
+# WebSocket pour le monitoring des événements
+@app.websocket("/ws/events")
+async def websocket_events_endpoint(websocket: WebSocket):
+    """
+    Point d'entrée WebSocket pour le monitoring des événements.
+    
+    Args:
+        websocket: Connexion WebSocket
+    """
+    await websocket.accept()
+    
+    # Générer un ID de connexion
+    connection_id = f"events_{uuid.uuid4().hex}"
+    
+    try:
+        # Ajouter à la liste des connexions actives
+        active_connections[connection_id] = websocket
+        
+        # Envoyer les événements récents
+        await websocket.send_json({
+            "event": "history",
+            "data": {"events": event_log[-100:]}  # Limiter à 100 événements
+        })
+        
+        # Garder la connexion ouverte
+        while True:
+            # Vérifier que le client est toujours connecté
+            message = await websocket.receive_text()
+            
+            # Si le client envoie "ping", répondre "pong"
+            if message == "ping":
+                await websocket.send_json({
+                    "event": "pong",
+                    "data": {"timestamp": time.time()}
+                })
+    
+    except WebSocketDisconnect:
+        # Le client s'est déconnecté
+        event_queue.emit(Event(
+            type=EventType.LOG_INFO,
+            source="fastapi_app",
+            data={"message": f"Events client disconnected: {connection_id}"}
+        ))
+    
+    finally:
+        # Retirer la connexion de la liste des connexions actives
+        if connection_id in active_connections:
+            del active_connections[connection_id]
+
+
+# Route pour envoyer un événement personnalisé (utile pour le debugging)
+@app.post("/debug/event")
+async def debug_event_endpoint(event_data: Dict[str, Any]):
+    """
+    Point d'entrée pour envoyer un événement personnalisé.
+    Utile pour le debugging.
+    
+    Args:
+        event_data: Données de l'événement
+        
+    Returns:
+        ID de l'événement
+    """
+    # Créer et émettre un événement personnalisé
+    event = Event(
+        type=EventType.CUSTOM,
+        source="debug_api",
+        data=event_data
+    )
+    
+    event_queue.emit(event)
+    
+    return {"event_id": event.id}
+
+
+# Route pour effacer le log d'événements
+@app.post("/debug/clear-log")
+async def debug_clear_log_endpoint():
+    """
+    Point d'entrée pour effacer le log d'événements.
+    
+    Returns:
+        Message de confirmation
+    """
+    global event_log
+    event_log = []
+    
+    return {"message": "Event log cleared"}
+
+
+# Route principale pour la documentation Swagger
+@app.get("/")
+async def root():
+    """
+    Point d'entrée principal.
+    Redirige vers la documentation Swagger.
+    
+    Returns:
+        Message de redirection
+    """
+    return {
+        "message": "Welcome to UnifiedLLM API",
+        "documentation": "/docs",
+        "api_version": "1.0.0"
+    }
+
+
+if __name__ == "__main__":
+    # Démarrer le serveur
+    uvicorn.run(app, host="0.0.0.0", port=8000)

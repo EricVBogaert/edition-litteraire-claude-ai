@@ -1,0 +1,717 @@
+#!/usr/bin/env python
+"""
+UnifiedLLM avec architecture événementielle.
+Implémentation basée sur un système de file d'événements façon Windows 3.11.
+"""
+
+import asyncio
+import json
+import uuid
+import logging
+from typing import Dict, List, Any, Optional, Union, Callable, Awaitable, Iterator, TypedDict
+
+from event_queue import EventQueue, Event, EventType, get_event_queue, event_context
+# Importer les classes de base de UnifiedLLM
+from unified_llm_base import Message, ModelConfig, Tool, MessageRole, LLMProvider
+
+
+class UnifiedLLMEventDriven:
+    """
+    Version événementielle de UnifiedLLM.
+    Toutes les opérations sont réalisées via des événements.
+    """
+    
+    def __init__(self, provider: str = "auto", 
+                api_key: str = None,
+                config_path: str = None,
+                event_queue: Optional[EventQueue] = None):
+        """
+        Initialise le client UnifiedLLM avec architecture événementielle.
+        
+        Args:
+            provider: Le fournisseur à utiliser ('claude', 'lmstudio', 'auto')
+            api_key: Clé API explicite (optionnelle)
+            config_path: Chemin vers un fichier de configuration personnalisé
+            event_queue: File d'événements à utiliser (si None, utilise l'instance singleton)
+        """
+        # Identifiant unique pour ce client
+        self.client_id = f"unified_llm_{uuid.uuid4().hex[:8]}"
+        
+        # Récupérer ou créer la file d'événements
+        self.event_queue = event_queue or get_event_queue()
+        
+        # Enregistrer les gestionnaires d'événements
+        self._register_event_handlers()
+        
+        # Providers disponibles et provider actif
+        self.available_providers = {}
+        self.active_provider = None
+        
+        # Attribuer les providers par événements
+        self.event_queue.emit(Event(
+            type=EventType.PROVIDER_INIT,
+            source=self.client_id,
+            data={
+                "requested_provider": provider,
+                "api_key": api_key,
+                "config_path": config_path
+            }
+        ))
+        
+        # On bloque jusqu'à ce que le fournisseur soit initialisé
+        # Dans une version plus avancée, on pourrait utiliser un Future
+        # ou une Promise pour attendre de façon non bloquante
+        import time
+        timeout = 10  # secondes
+        start_time = time.time()
+        while self.active_provider is None:
+            time.sleep(0.1)
+            if time.time() - start_time > timeout:
+                raise TimeoutError("Timeout waiting for provider initialization")
+    
+    def _register_event_handlers(self):
+        """Enregistre les gestionnaires d'événements."""
+        # Gestionnaire pour l'initialisation du fournisseur
+        self.event_queue.register_handler(
+            EventType.PROVIDER_INIT,
+            self._handle_provider_init,
+            self.client_id
+        )
+        
+        # Gestionnaire pour les réponses de chat
+        self.event_queue.register_handler(
+            EventType.CHAT_RESPONSE,
+            self._handle_chat_response,
+            self.client_id
+        )
+        
+        # Gestionnaire pour les fragments de chat (streaming)
+        self.event_queue.register_handler(
+            EventType.CHAT_FRAGMENT,
+            self._handle_chat_fragment,
+            self.client_id
+        )
+        
+        # Gestionnaire pour les réponses d'embedding
+        self.event_queue.register_handler(
+            EventType.EMBED_RESPONSE,
+            self._handle_embed_response,
+            self.client_id
+        )
+        
+        # Gestionnaires asynchrones
+        self.event_queue.register_async_handler(
+            EventType.CHAT_RESPONSE,
+            self._handle_chat_response_async,
+            self.client_id
+        )
+        
+        self.event_queue.register_async_handler(
+            EventType.EMBED_RESPONSE,
+            self._handle_embed_response_async,
+            self.client_id
+        )
+    
+    def _handle_provider_init(self, event: Event):
+        """
+        Gestionnaire pour l'initialisation des fournisseurs.
+        
+        Args:
+            event: Événement d'initialisation
+        """
+        # Ne traiter que les événements destinés à ce client
+        if event.source != self.client_id:
+            return
+        
+        # Extraire les données
+        data = event.data
+        requested_provider = data.get("requested_provider", "auto")
+        api_key = data.get("api_key")
+        config_path = data.get("config_path")
+        
+        # Simulation - Dans une implémentation réelle, ce serait plus complexe
+        # On instancierait les fournisseurs disponibles ici
+        
+        # Initialiser les fournisseurs disponibles
+        if requested_provider in ("claude", "auto"):
+            self.available_providers["claude"] = {
+                "name": "claude",
+                "type": "cloud",
+                "models": ["claude-3-opus", "claude-3-sonnet", "claude-3-haiku"],
+                "status": "ready" if api_key else "not_configured"
+            }
+        
+        if requested_provider in ("lmstudio", "auto"):
+            self.available_providers["lmstudio"] = {
+                "name": "lmstudio",
+                "type": "local",
+                "models": ["qwen2.5-7b-instruct-1m", "llama3-8b-instruct"],
+                "status": "ready"
+            }
+        
+        # Sélectionner le fournisseur actif
+        if requested_provider != "auto" and requested_provider in self.available_providers:
+            self.active_provider = requested_provider
+        elif "lmstudio" in self.available_providers:
+            self.active_provider = "lmstudio"
+        elif "claude" in self.available_providers:
+            self.active_provider = "claude"
+        else:
+            # Émettre un événement d'erreur
+            self.event_queue.emit(Event(
+                type=EventType.LOG_ERROR,
+                source=self.client_id,
+                data={"error": "No provider available"}
+            ))
+            return
+        
+        # Émettre un événement de changement de fournisseur
+        self.event_queue.emit(Event(
+            type=EventType.PROVIDER_CHANGE,
+            source=self.client_id,
+            data={"active_provider": self.active_provider}
+        ))
+    
+    def _handle_chat_response(self, event: Event):
+        """
+        Gestionnaire pour les réponses de chat.
+        
+        Args:
+            event: Événement de réponse
+        """
+        # Vérifier que cet événement correspond à notre requête
+        request_id = event.data.get("request_id")
+        if request_id not in self._pending_requests:
+            return
+        
+        # Extraire la réponse
+        response = event.data.get("response")
+        self._pending_requests[request_id]["response"] = response
+        self._pending_requests[request_id]["completed"] = True
+    
+    def _handle_chat_fragment(self, event: Event):
+        """
+        Gestionnaire pour les fragments de chat (streaming).
+        
+        Args:
+            event: Événement de fragment
+        """
+        # Vérifier que cet événement correspond à notre requête
+        request_id = event.data.get("request_id")
+        if request_id not in self._pending_requests:
+            return
+        
+        # Extraire le fragment
+        fragment = event.data.get("fragment")
+        stream_handler = self._pending_requests[request_id].get("stream_handler")
+        
+        # Si un gestionnaire de stream est défini, l'appeler
+        if stream_handler:
+            stream_handler(fragment)
+    
+    def _handle_embed_response(self, event: Event):
+        """
+        Gestionnaire pour les réponses d'embedding.
+        
+        Args:
+            event: Événement de réponse
+        """
+        # Vérifier que cet événement correspond à notre requête
+        request_id = event.data.get("request_id")
+        if request_id not in self._pending_requests:
+            return
+        
+        # Extraire la réponse
+        embeddings = event.data.get("embeddings")
+        self._pending_requests[request_id]["response"] = embeddings
+        self._pending_requests[request_id]["completed"] = True
+    
+    async def _handle_chat_response_async(self, event: Event):
+        """
+        Gestionnaire asynchrone pour les réponses de chat.
+        
+        Args:
+            event: Événement de réponse
+        """
+        # Vérifier que cet événement correspond à notre requête
+        request_id = event.data.get("request_id")
+        if request_id not in self._pending_requests:
+            return
+        
+        # Extraire la réponse
+        response = event.data.get("response")
+        future = self._pending_requests[request_id].get("future")
+        
+        # Si un future est défini, définir son résultat
+        if future and not future.done():
+            future.set_result(response)
+    
+    async def _handle_embed_response_async(self, event: Event):
+        """
+        Gestionnaire asynchrone pour les réponses d'embedding.
+        
+        Args:
+            event: Événement de réponse
+        """
+        # Vérifier que cet événement correspond à notre requête
+        request_id = event.data.get("request_id")
+        if request_id not in self._pending_requests:
+            return
+        
+        # Extraire la réponse
+        embeddings = event.data.get("embeddings")
+        future = self._pending_requests[request_id].get("future")
+        
+        # Si un future est défini, définir son résultat
+        if future and not future.done():
+            future.set_result(embeddings)
+    
+    def __del__(self):
+        """Nettoyage lors de la destruction de l'objet."""
+        # Désenregistrer tous les gestionnaires de cet abonné
+        self.event_queue.unregister_subscriber(self.client_id)
+    
+    #
+    # API synchrone
+    #
+    
+    def chat(self, messages: List[Message], config: ModelConfig, 
+            tools: List[Tool] = None, stream: bool = False,
+            timeout: int = 60) -> Union[str, Iterator[str]]:
+        """
+        Version synchrone de chat.
+        Émet un événement de requête et attend la réponse.
+        
+        Args:
+            messages: Liste des messages
+            config: Configuration du modèle
+            tools: Liste d'outils
+            stream: Si True, retourne un itérateur
+            timeout: Délai d'attente maximum en secondes
+            
+        Returns:
+            Réponse ou itérateur de fragments
+        """
+        # Structure pour stocker les requêtes en attente
+        if not hasattr(self, '_pending_requests'):
+            self._pending_requests = {}
+        
+        # Générer un ID de requête
+        request_id = str(uuid.uuid4())
+        
+        # Préparer la structure pour recevoir la réponse
+        self._pending_requests[request_id] = {
+            "completed": False,
+            "response": None,
+            "stream_handler": None,
+            "fragments": []
+        }
+        
+        # Si streaming demandé, configurer un itérateur
+        if stream:
+            # Définir une file pour les fragments
+            fragment_queue = queue.Queue()
+            
+            # Fonction pour recevoir les fragments
+            def handle_fragment(fragment):
+                fragment_queue.put(fragment)
+            
+            # Stocker le gestionnaire de fragments
+            self._pending_requests[request_id]["stream_handler"] = handle_fragment
+            
+            # Définir l'itérateur
+            def fragment_iterator():
+                while True:
+                    try:
+                        # Attendre un fragment avec timeout
+                        fragment = fragment_queue.get(timeout=timeout)
+                        yield fragment
+                        
+                        # Si c'est le dernier fragment, sortir
+                        if fragment_queue.empty() and self._pending_requests[request_id]["completed"]:
+                            break
+                    except queue.Empty:
+                        # Timeout
+                        if self._pending_requests[request_id]["completed"]:
+                            break
+                        continue
+            
+            # Émettre l'événement de requête
+            with event_context(self.client_id):
+                self.event_queue.emit(Event(
+                    type=EventType.CHAT_REQUEST,
+                    source=self.client_id,
+                    data={
+                        "request_id": request_id,
+                        "messages": [m.to_dict() for m in messages],
+                        "config": config.__dict__,
+                        "tools": [t.to_dict() for t in tools] if tools else [],
+                        "stream": True,
+                        "provider": self.active_provider
+                    }
+                ))
+            
+            # Retourner l'itérateur
+            return fragment_iterator()
+        
+        else:
+            # Émettre l'événement de requête
+            with event_context(self.client_id):
+                self.event_queue.emit(Event(
+                    type=EventType.CHAT_REQUEST,
+                    source=self.client_id,
+                    data={
+                        "request_id": request_id,
+                        "messages": [m.to_dict() for m in messages],
+                        "config": config.__dict__,
+                        "tools": [t.to_dict() for t in tools] if tools else [],
+                        "stream": False,
+                        "provider": self.active_provider
+                    }
+                ))
+            
+            # Attendre la réponse avec timeout
+            import time
+            start_time = time.time()
+            while not self._pending_requests[request_id]["completed"]:
+                time.sleep(0.1)
+                if time.time() - start_time > timeout:
+                    # Nettoyer
+                    response = None
+                    del self._pending_requests[request_id]
+                    raise TimeoutError(f"Timeout waiting for chat response (>{timeout}s)")
+            
+            # Récupérer la réponse
+            response = self._pending_requests[request_id]["response"]
+            
+            # Nettoyer
+            del self._pending_requests[request_id]
+            
+            return response
+    
+    def embed(self, text: str, model_name: str = None, timeout: int = 30) -> List[float]:
+        """
+        Version synchrone de embed.
+        Émet un événement de requête et attend la réponse.
+        
+        Args:
+            text: Texte à encoder
+            model_name: Nom du modèle (optionnel)
+            timeout: Délai d'attente maximum en secondes
+            
+        Returns:
+            Vecteur d'embedding
+        """
+        # Structure pour stocker les requêtes en attente
+        if not hasattr(self, '_pending_requests'):
+            self._pending_requests = {}
+        
+        # Générer un ID de requête
+        request_id = str(uuid.uuid4())
+        
+        # Préparer la structure pour recevoir la réponse
+        self._pending_requests[request_id] = {
+            "completed": False,
+            "response": None
+        }
+        
+        # Émettre l'événement de requête
+        with event_context(self.client_id):
+            self.event_queue.emit(Event(
+                type=EventType.EMBED_REQUEST,
+                source=self.client_id,
+                data={
+                    "request_id": request_id,
+                    "text": text,
+                    "model_name": model_name,
+                    "provider": self.active_provider
+                }
+            ))
+        
+        # Attendre la réponse avec timeout
+        import time
+        start_time = time.time()
+        while not self._pending_requests[request_id]["completed"]:
+            time.sleep(0.1)
+            if time.time() - start_time > timeout:
+                # Nettoyer
+                response = None
+                del self._pending_requests[request_id]
+                raise TimeoutError(f"Timeout waiting for embed response (>{timeout}s)")
+        
+        # Récupérer la réponse
+        embeddings = self._pending_requests[request_id]["response"]
+        
+        # Nettoyer
+        del self._pending_requests[request_id]
+        
+        return embeddings
+    
+    def supported_models(self) -> List[str]:
+        """
+        Liste les modèles supportés par le fournisseur actif.
+        
+        Returns:
+            Liste des noms de modèles
+        """
+        provider_info = self.available_providers.get(self.active_provider, {})
+        return provider_info.get("models", [])
+    
+    #
+    # API asynchrone
+    #
+    
+    async def chat_async(self, messages: List[Message], config: ModelConfig, 
+                        tools: List[Tool] = None, stream: bool = False,
+                        timeout: int = 60) -> Union[str, AsyncIterator[str]]:
+        """
+        Version asynchrone de chat.
+        Émet un événement et retourne un Future/coroutine.
+        
+        Args:
+            messages: Liste des messages
+            config: Configuration du modèle
+            tools: Liste d'outils
+            stream: Si True, retourne un itérateur asynchrone
+            timeout: Délai d'attente maximum en secondes
+            
+        Returns:
+            Réponse ou itérateur asynchrone de fragments
+        """
+        # Structure pour stocker les requêtes en attente
+        if not hasattr(self, '_pending_requests'):
+            self._pending_requests = {}
+        
+        # Générer un ID de requête
+        request_id = str(uuid.uuid4())
+        
+        # Créer un Future pour recevoir la réponse
+        loop = asyncio.get_event_loop()
+        future = loop.create_future()
+        
+        # Préparer la structure pour recevoir la réponse
+        self._pending_requests[request_id] = {
+            "completed": False,
+            "response": None,
+            "future": future,
+            "stream_queue": None
+        }
+        
+        # Si streaming demandé, configurer un itérateur asynchrone
+        if stream:
+            # Créer une file asyncio
+            stream_queue = asyncio.Queue()
+            self._pending_requests[request_id]["stream_queue"] = stream_queue
+            
+            # Fonction pour recevoir les fragments
+            def handle_fragment(fragment):
+                asyncio.run_coroutine_threadsafe(
+                    stream_queue.put(fragment),
+                    loop
+                )
+            
+            # Stocker le gestionnaire de fragments
+            self._pending_requests[request_id]["stream_handler"] = handle_fragment
+            
+            # Définir l'itérateur asynchrone
+            async def fragment_iterator():
+                while True:
+                    try:
+                        # Attendre un fragment avec timeout
+                        fragment = await asyncio.wait_for(
+                            stream_queue.get(),
+                            timeout=timeout
+                        )
+                        yield fragment
+                        
+                        # Si c'est le dernier fragment, sortir
+                        if stream_queue.empty() and self._pending_requests[request_id]["completed"]:
+                            break
+                    except asyncio.TimeoutError:
+                        # Timeout
+                        if self._pending_requests[request_id]["completed"]:
+                            break
+                        continue
+            
+            # Émettre l'événement de requête
+            await self.event_queue.emit_async(Event(
+                type=EventType.CHAT_REQUEST,
+                source=self.client_id,
+                data={
+                    "request_id": request_id,
+                    "messages": [m.to_dict() for m in messages],
+                    "config": config.__dict__,
+                    "tools": [t.to_dict() for t in tools] if tools else [],
+                    "stream": True,
+                    "provider": self.active_provider
+                }
+            ))
+            
+            # Retourner l'itérateur asynchrone
+            return fragment_iterator()
+        
+        else:
+            # Émettre l'événement de requête
+            await self.event_queue.emit_async(Event(
+                type=EventType.CHAT_REQUEST,
+                source=self.client_id,
+                data={
+                    "request_id": request_id,
+                    "messages": [m.to_dict() for m in messages],
+                    "config": config.__dict__,
+                    "tools": [t.to_dict() for t in tools] if tools else [],
+                    "stream": False,
+                    "provider": self.active_provider
+                }
+            ))
+            
+            try:
+                # Attendre la réponse avec timeout
+                response = await asyncio.wait_for(future, timeout=timeout)
+                return response
+            except asyncio.TimeoutError:
+                raise TimeoutError(f"Timeout waiting for chat response (>{timeout}s)")
+            finally:
+                # Nettoyer
+                if request_id in self._pending_requests:
+                    del self._pending_requests[request_id]
+    
+    async def embed_async(self, text: str, model_name: str = None, 
+                         timeout: int = 30) -> List[float]:
+        """
+        Version asynchrone de embed.
+        Émet un événement et retourne un Future/coroutine.
+        
+        Args:
+            text: Texte à encoder
+            model_name: Nom du modèle (optionnel)
+            timeout: Délai d'attente maximum en secondes
+            
+        Returns:
+            Vecteur d'embedding
+        """
+        # Structure pour stocker les requêtes en attente
+        if not hasattr(self, '_pending_requests'):
+            self._pending_requests = {}
+        
+        # Générer un ID de requête
+        request_id = str(uuid.uuid4())
+        
+        # Créer un Future pour recevoir la réponse
+        loop = asyncio.get_event_loop()
+        future = loop.create_future()
+        
+        # Préparer la structure pour recevoir la réponse
+        self._pending_requests[request_id] = {
+            "completed": False,
+            "response": None,
+            "future": future
+        }
+        
+        # Émettre l'événement de requête
+        await self.event_queue.emit_async(Event(
+            type=EventType.EMBED_REQUEST,
+            source=self.client_id,
+            data={
+                "request_id": request_id,
+                "text": text,
+                "model_name": model_name,
+                "provider": self.active_provider
+            }
+        ))
+        
+        try:
+            # Attendre la réponse avec timeout
+            embeddings = await asyncio.wait_for(future, timeout=timeout)
+            return embeddings
+        except asyncio.TimeoutError:
+            raise TimeoutError(f"Timeout waiting for embed response (>{timeout}s)")
+        finally:
+            # Nettoyer
+            if request_id in self._pending_requests:
+                del self._pending_requests[request_id]
+    
+    async def supported_models_async(self) -> List[str]:
+        """
+        Version asynchrone de supported_models.
+        
+        Returns:
+            Liste des noms de modèles
+        """
+        return self.supported_models()
+    
+    #
+    # Méthodes utilitaires
+    #
+    
+    def get_provider(self) -> str:
+        """Récupère le nom du fournisseur actif."""
+        return self.active_provider
+    
+    def set_provider(self, provider: str) -> None:
+        """
+        Change le fournisseur actif.
+        
+        Args:
+            provider: Nom du fournisseur
+        
+        Raises:
+            ValueError: Si le fournisseur n'est pas disponible
+        """
+        if provider not in self.available_providers:
+            raise ValueError(f"Provider '{provider}' not available")
+        
+        # Émettre un événement de changement de fournisseur
+        self.event_queue.emit(Event(
+            type=EventType.PROVIDER_CHANGE,
+            source=self.client_id,
+            data={"active_provider": provider}
+        ))
+        
+        self.active_provider = provider
+    
+    def list_providers(self) -> List[str]:
+        """
+        Liste les fournisseurs disponibles.
+        
+        Returns:
+            Liste des noms de fournisseurs
+        """
+        return list(self.available_providers.keys())
+    
+    def create_message(self, role: str, content: str = None, file_paths: List[str] = None,
+                      tool_call: Dict[str, Any] = None, tool_result: Dict[str, Any] = None) -> Message:
+        """
+        Crée un message formaté correctement.
+        
+        Args:
+            role: Rôle du message
+            content: Contenu du message
+            file_paths: Chemins des fichiers
+            tool_call: Appel d'outil
+            tool_result: Résultat d'outil
+            
+        Returns:
+            Message formaté
+        """
+        return Message(
+            role=MessageRole(role),
+            content=content,
+            file_paths=file_paths or [],
+            tool_call=tool_call,
+            tool_result=tool_result
+        )
+    
+    def create_tool(self, name: str, description: str, parameters: Dict[str, Any]) -> Tool:
+        """
+        Crée une définition d'outil.
+        
+        Args:
+            name: Nom de l'outil
+            description: Description de l'outil
+            parameters: Paramètres de l'outil
+            
+        Returns:
+            Définition d'outil
+        """
+        return Tool(name, description, parameters)

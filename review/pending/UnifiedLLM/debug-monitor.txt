@@ -1,0 +1,466 @@
+#!/usr/bin/env python
+"""
+Interface de monitoring et debugging pour UnifiedLLM avec architecture événementielle.
+Interface web simple avec Streamlit pour visualiser les événements et interagir avec le système.
+"""
+
+import os
+import time
+import json
+import asyncio
+import websocket
+import threading
+from datetime import datetime
+import streamlit as st
+import pandas as pd
+import requests
+import plotly.express as px
+import plotly.graph_objects as go
+
+
+# Configuration
+API_URL = os.environ.get("UNIFIED_LLM_API_URL", "http://localhost:8000")
+WS_URL = os.environ.get("UNIFIED_LLM_WS_URL", "ws://localhost:8000/ws/events")
+
+# État global
+if 'events' not in st.session_state:
+    st.session_state.events = []
+if 'ws_connected' not in st.session_state:
+    st.session_state.ws_connected = False
+if 'ws' not in st.session_state:
+    st.session_state.ws = None
+if 'stats' not in st.session_state:
+    st.session_state.stats = {}
+
+
+def connect_websocket():
+    """Établit une connexion WebSocket au serveur d'événements."""
+    
+    if st.session_state.ws_connected:
+        st.warning("WebSocket already connected")
+        return
+    
+    try:
+        # Définir une fonction de callback pour les messages WebSocket
+        def on_message(ws, message):
+            try:
+                data = json.loads(message)
+                if data["event"] == "history":
+                    # Historique d'événements
+                    for event in data["data"]["events"]:
+                        if event not in st.session_state.events:
+                            st.session_state.events.append(event)
+                
+                elif data["event"] == "log":
+                    # Nouvel événement
+                    event = data["data"]
+                    if event not in st.session_state.events:
+                        st.session_state.events.append(event)
+                
+                elif data["event"] == "pong":
+                    # Pong (keep-alive)
+                    pass
+            except Exception as e:
+                st.error(f"Error processing WebSocket message: {e}")
+        
+        def on_error(ws, error):
+            st.error(f"WebSocket error: {error}")
+            st.session_state.ws_connected = False
+        
+        def on_close(ws, close_status_code, close_msg):
+            st.warning("WebSocket connection closed")
+            st.session_state.ws_connected = False
+        
+        def on_open(ws):
+            st.success("WebSocket connected")
+            st.session_state.ws_connected = True
+        
+        # Créer et configurer le WebSocket
+        ws = websocket.WebSocketApp(
+            WS_URL,
+            on_message=on_message,
+            on_error=on_error,
+            on_close=on_close,
+            on_open=on_open
+        )
+        
+        # Démarrer le WebSocket dans un thread
+        def run_ws():
+            ws.run_forever()
+        
+        thread = threading.Thread(target=run_ws, daemon=True)
+        thread.start()
+        
+        # Stocker le WebSocket
+        st.session_state.ws = ws
+        
+        # Attendre que la connexion soit établie
+        timeout = 5
+        start_time = time.time()
+        while not st.session_state.ws_connected and time.time() - start_time < timeout:
+            time.sleep(0.1)
+        
+        if not st.session_state.ws_connected:
+            st.error("Failed to connect WebSocket")
+    
+    except Exception as e:
+        st.error(f"Error connecting WebSocket: {e}")
+
+
+def fetch_events():
+    """Récupère les événements récents depuis l'API."""
+    try:
+        response = requests.get(f"{API_URL}/events", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            events = data.get("events", [])
+            
+            # Mettre à jour les événements
+            st.session_state.events = events
+            
+            return True
+        else:
+            st.error(f"Error fetching events: {response.status_code} {response.text}")
+            return False
+    
+    except Exception as e:
+        st.error(f"Error fetching events: {e}")
+        return False
+
+
+def fetch_stats():
+    """Récupère les statistiques depuis l'API."""
+    try:
+        response = requests.get(f"{API_URL}/stats", timeout=5)
+        if response.status_code == 200:
+            stats = response.json()
+            
+            # Mettre à jour les statistiques
+            st.session_state.stats = stats
+            
+            return True
+        else:
+            st.error(f"Error fetching stats: {response.status_code} {response.text}")
+            return False
+    
+    except Exception as e:
+        st.error(f"Error fetching stats: {e}")
+        return False
+
+
+def send_chat_request(message, model, provider=None, stream=False):
+    """
+    Envoie une requête de chat à l'API.
+    
+    Args:
+        message: Message à envoyer
+        model: Modèle à utiliser
+        provider: Fournisseur à utiliser (optionnel)
+        stream: Si True, utilise le streaming
+        
+    Returns:
+        Réponse de l'API
+    """
+    try:
+        # Préparer les données
+        data = {
+            "messages": [
+                {
+                    "role": "user",
+                    "content": message
+                }
+            ],
+            "model": model,
+            "temperature": 0.7,
+            "max_tokens": 2000
+        }
+        
+        if provider:
+            data["provider"] = provider
+        
+        # Faire la requête
+        if stream:
+            # WebSocket streaming (non implémenté ici)
+            st.warning("Streaming not implemented in this demo")
+            return None
+        else:
+            # Requête HTTP standard
+            response = requests.post(f"{API_URL}/chat", json=data, timeout=30)
+            if response.status_code == 200:
+                return response.json()
+            else:
+                st.error(f"Error sending chat request: {response.status_code} {response.text}")
+                return None
+    
+    except Exception as e:
+        st.error(f"Error sending chat request: {e}")
+        return None
+
+
+def send_custom_event(event_type, data):
+    """
+    Envoie un événement personnalisé à l'API.
+    
+    Args:
+        event_type: Type d'événement
+        data: Données de l'événement
+        
+    Returns:
+        ID de l'événement
+    """
+    try:
+        # Préparer les données
+        event_data = {
+            "type": event_type,
+            "data": data
+        }
+        
+        # Faire la requête
+        response = requests.post(f"{API_URL}/debug/event", json=event_data, timeout=5)
+        if response.status_code == 200:
+            return response.json()
+        else:
+            st.error(f"Error sending custom event: {response.status_code} {response.text}")
+            return None
+    
+    except Exception as e:
+        st.error(f"Error sending custom event: {e}")
+        return None
+
+
+def clear_events():
+    """Efface le log d'événements."""
+    try:
+        response = requests.post(f"{API_URL}/debug/clear-log", timeout=5)
+        if response.status_code == 200:
+            st.session_state.events = []
+            st.success("Event log cleared")
+            return True
+        else:
+            st.error(f"Error clearing events: {response.status_code} {response.text}")
+            return False
+    
+    except Exception as e:
+        st.error(f"Error clearing events: {e}")
+        return False
+
+
+def format_timestamp(timestamp):
+    """Formate un timestamp en chaîne de date/heure."""
+    return datetime.fromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]
+
+
+def events_to_dataframe():
+    """Convertit les événements en DataFrame pandas."""
+    if not st.session_state.events:
+        return pd.DataFrame()
+    
+    # Extraire les données pertinentes
+    data = []
+    for event in st.session_state.events:
+        # Formatter les données pour l'affichage
+        data.append({
+            "timestamp": format_timestamp(event["timestamp"]),
+            "raw_timestamp": event["timestamp"],
+            "type": event["type"],
+            "source": event["source"],
+            "id": event["id"],
+            "data": json.dumps(event["data"], indent=2)
+        })
+    
+    # Créer le DataFrame
+    df = pd.DataFrame(data)
+    
+    # Trier par timestamp
+    df = df.sort_values("raw_timestamp", ascending=False)
+    
+    return df
+
+
+def render_events_dashboard():
+    """Affiche le tableau de bord des événements."""
+    st.subheader("📊 Event Dashboard")
+    
+    # Boutons pour actualiser/connecter
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        if st.button("Refresh Events"):
+            fetch_events()
+    
+    with col2:
+        if st.button("Connect WebSocket"):
+            connect_websocket()
+    
+    with col3:
+        if st.button("Fetch Stats"):
+            fetch_stats()
+    
+    with col4:
+        if st.button("Clear Events"):
+            clear_events()
+    
+    # Afficher les statistiques
+    if st.session_state.stats:
+        st.subheader("Queue Statistics")
+        
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric("Sync Queue Size", st.session_state.stats.get("sync_queue_size", 0))
+        
+        with col2:
+            st.metric("Async Queue Size", st.session_state.stats.get("async_queue_size", 0))
+        
+        # Afficher les abonnés
+        st.subheader("Subscribers")
+        subscribers = st.session_state.stats.get("subscribers", {})
+        if subscribers:
+            for sub_id, events in subscribers.items():
+                with st.expander(f"Subscriber: {sub_id}"):
+                    st.write(f"Subscribed to {len(events)} event types:")
+                    st.write(", ".join(events))
+    
+    # Analyse des événements
+    st.subheader("Event Analysis")
+    
+    # Convertir en DataFrame
+    df = events_to_dataframe()
+    
+    if not df.empty:
+        # Afficher les statistiques
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Total Events", len(df))
+        
+        with col2:
+            event_types = df["type"].unique()
+            st.metric("Event Types", len(event_types))
+        
+        with col3:
+            sources = df["source"].unique()
+            st.metric("Event Sources", len(sources))
+        
+        # Graphique de répartition des types d'événements
+        st.subheader("Event Type Distribution")
+        type_counts = df["type"].value_counts().reset_index()
+        type_counts.columns = ["Type", "Count"]
+        
+        fig = px.bar(
+            type_counts, 
+            x="Type", 
+            y="Count",
+            color="Type",
+            title="Event Types"
+        )
+        st.plotly_chart(fig)
+        
+        # Graphique de répartition des sources d'événements
+        st.subheader("Event Source Distribution")
+        source_counts = df["source"].value_counts().reset_index()
+        source_counts.columns = ["Source", "Count"]
+        
+        fig = px.pie(
+            source_counts, 
+            names="Source", 
+            values="Count",
+            title="Event Sources"
+        )
+        st.plotly_chart(fig)
+        
+        # Timeline des événements
+        st.subheader("Event Timeline")
+        
+        # Convertir le timestamp en datetime pour la timeline
+        df_timeline = df.copy()
+        df_timeline["datetime"] = pd.to_datetime(df_timeline["raw_timestamp"], unit="s")
+        
+        # Regrouper par minute et type
+        timeline_data = df_timeline.groupby([pd.Grouper(key="datetime", freq="1min"), "type"]).size().reset_index(name="count")
+        
+        fig = px.line(
+            timeline_data,
+            x="datetime",
+            y="count",
+            color="type",
+            title="Events Over Time"
+        )
+        st.plotly_chart(fig)
+    
+    # Afficher le tableau des événements
+    st.subheader("Event Log")
+    
+    if not df.empty:
+        # Filtres
+        col1, col2 = st.columns(2)
+        with col1:
+            selected_types = st.multiselect(
+                "Filter by Type",
+                options=sorted(df["type"].unique()),
+                default=[]
+            )
+        
+        with col2:
+            selected_sources = st.multiselect(
+                "Filter by Source",
+                options=sorted(df["source"].unique()),
+                default=[]
+            )
+        
+        # Appliquer les filtres
+        filtered_df = df
+        if selected_types:
+            filtered_df = filtered_df[filtered_df["type"].isin(selected_types)]
+        if selected_sources:
+            filtered_df = filtered_df[filtered_df["source"].isin(selected_sources)]
+        
+        # Nombre maximum d'événements à afficher
+        max_events = st.slider("Max Events to Display", min_value=10, max_value=1000, value=100, step=10)
+        filtered_df = filtered_df.head(max_events)
+        
+        # Afficher le tableau
+        st.dataframe(filtered_df.drop("raw_timestamp", axis=1), use_container_width=True)
+    else:
+        st.info("No events to display. Try refreshing or connecting to WebSocket.")
+
+
+def render_chat_interface():
+    """Affiche l'interface de chat."""
+    st.subheader("💬 Chat Interface")
+    
+    # Récupérer les fournisseurs disponibles
+    try:
+        response = requests.get(f"{API_URL}/providers", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            providers = data.get("available", [])
+            active_provider = data.get("active")
+        else:
+            st.error(f"Error fetching providers: {response.status_code} {response.text}")
+            providers = []
+            active_provider = None
+    except Exception as e:
+        st.error(f"Error fetching providers: {e}")
+        providers = []
+        active_provider = None
+    
+    # Récupérer les modèles disponibles
+    try:
+        response = requests.get(f"{API_URL}/models", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            models = data.get("models", [])
+            provider = data.get("provider")
+        else:
+            st.error(f"Error fetching models: {response.status_code} {response.text}")
+            models = []
+            provider = None
+    except Exception as e:
+        st.error(f"Error fetching models: {e}")
+        models = []
+        provider = None
+    
+    # Formulaire de chat
+    with st.form("chat_form"):
+        # Sélection du fournisseur
+        provider_selection = st.selectbox(
+            "Provider",
+            options=providers,

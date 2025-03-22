@@ -1,0 +1,703 @@
+#!/usr/bin/env python
+"""
+Implémentation concrète d'un fournisseur LLM dans l'architecture événementielle.
+Exemple avec Claude API.
+"""
+
+import asyncio
+import time
+import uuid
+from typing import List, Dict, Any, Optional, Union, AsyncIterator
+
+# Import de l'API Anthropic
+try:
+    import anthropic
+    from anthropic import AsyncAnthropic
+    ANTHROPIC_AVAILABLE = True
+except ImportError:
+    ANTHROPIC_AVAILABLE = False
+
+# Import des modules UnifiedLLM
+from unified_llm_base import Message, ModelConfig, Tool, MessageRole, LLMProvider
+from event_queue import Event, EventType, get_event_queue
+
+
+class ClaudeEventProvider:
+    """
+    Fournisseur Claude basé sur architecture événementielle.
+    S'abonne aux événements et répond aux requêtes.
+    """
+    
+    def __init__(self, api_key: str, provider_id: str = "claude_provider"):
+        """
+        Initialise le fournisseur Claude.
+        
+        Args:
+            api_key: Clé API Anthropic
+            provider_id: Identifiant unique pour ce fournisseur
+        """
+        if not ANTHROPIC_AVAILABLE:
+            raise ImportError("anthropic package is required")
+        
+        self.provider_id = provider_id
+        self.api_key = api_key
+        
+        # Créer le client Anthropic
+        self.client = anthropic.Anthropic(api_key=api_key)
+        self.async_client = AsyncAnthropic(api_key=api_key)
+        
+        # Obtenir la file d'événements
+        self.event_queue = get_event_queue()
+        
+        # Enregistrer les gestionnaires d'événements
+        self._register_event_handlers()
+        
+        # Émettre un événement d'initialisation
+        self.event_queue.emit(Event(
+            type=EventType.LOG_INFO,
+            source=self.provider_id,
+            data={"message": "Claude provider initialized"}
+        ))
+    
+    def _register_event_handlers(self):
+        """Enregistre les gestionnaires d'événements."""
+        # Gestionnaire pour les requêtes de chat
+        self.event_queue.register_handler(
+            EventType.CHAT_REQUEST,
+            self._handle_chat_request,
+            self.provider_id
+        )
+        
+        # Gestionnaire pour les requêtes d'embedding
+        self.event_queue.register_handler(
+            EventType.EMBED_REQUEST,
+            self._handle_embed_request,
+            self.provider_id
+        )
+        
+        # Gestionnaires asynchrones
+        self.event_queue.register_async_handler(
+            EventType.CHAT_REQUEST,
+            self._handle_chat_request_async,
+            self.provider_id
+        )
+        
+        self.event_queue.register_async_handler(
+            EventType.EMBED_REQUEST,
+            self._handle_embed_request_async,
+            self.provider_id
+        )
+    
+    def _handle_chat_request(self, event: Event):
+        """
+        Gestionnaire synchrone pour les requêtes de chat.
+        
+        Args:
+            event: Événement de requête
+        """
+        # Vérifier si cet événement est pour ce fournisseur
+        if event.data.get("provider") != "claude":
+            return
+        
+        # Extraire les données
+        request_id = event.data.get("request_id")
+        messages_data = event.data.get("messages", [])
+        config_data = event.data.get("config", {})
+        tools_data = event.data.get("tools", [])
+        stream = event.data.get("stream", False)
+        
+        # Convertir les messages au format Claude
+        claude_messages = self._convert_messages_to_claude(messages_data)
+        
+        # Extraire les paramètres de configuration
+        model = config_data.get("model_name", "claude-3-sonnet-20240229")
+        temperature = config_data.get("temperature", 0.7)
+        max_tokens = config_data.get("max_tokens", 4096)
+        
+        # Convertir les outils au format Claude
+        claude_tools = self._convert_tools_to_claude(tools_data) if tools_data else None
+        
+        try:
+            if stream:
+                # Pour le streaming, on délègue à la version asynchrone
+                # qui est exécutée dans un thread séparé
+                import threading
+                thread = threading.Thread(
+                    target=self._stream_in_thread,
+                    args=(request_id, claude_messages, model, temperature, max_tokens, claude_tools)
+                )
+                thread.start()
+            else:
+                # Faire la requête synchrone à Claude
+                response = self.client.messages.create(
+                    model=model,
+                    messages=claude_messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    tools=claude_tools
+                )
+                
+                # Extraire la réponse
+                response_text = ""
+                for content_block in response.content:
+                    if content_block.type == "text":
+                        response_text += content_block.text
+                
+                # Émettre un événement de réponse
+                self.event_queue.emit(Event(
+                    type=EventType.CHAT_RESPONSE,
+                    source=self.provider_id,
+                    data={
+                        "request_id": request_id,
+                        "response": response_text
+                    }
+                ))
+        
+        except Exception as e:
+            # Émettre un événement d'erreur
+            self.event_queue.emit(Event(
+                type=EventType.CHAT_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "error": str(e)
+                }
+            ))
+    
+    def _stream_in_thread(self, request_id, claude_messages, model, temperature, max_tokens, claude_tools):
+        """
+        Exécute le streaming dans un thread séparé.
+        
+        Args:
+            request_id: ID de la requête
+            claude_messages: Messages formatés pour Claude
+            model: Nom du modèle
+            temperature: Température
+            max_tokens: Nombre maximum de tokens
+            claude_tools: Outils formatés pour Claude
+        """
+        try:
+            # Faire la requête de streaming à Claude
+            with self.client.messages.stream(
+                model=model,
+                messages=claude_messages,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                tools=claude_tools
+            ) as stream:
+                for chunk in stream:
+                    if chunk.type == "content_block_delta" and chunk.delta.type == "text":
+                        # Émettre un événement de fragment
+                        self.event_queue.emit(Event(
+                            type=EventType.CHAT_FRAGMENT,
+                            source=self.provider_id,
+                            data={
+                                "request_id": request_id,
+                                "fragment": chunk.delta.text
+                            }
+                        ))
+            
+            # Émettre un événement de fin de streaming
+            self.event_queue.emit(Event(
+                type=EventType.CHAT_COMPLETE,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "completed": True
+                }
+            ))
+        
+        except Exception as e:
+            # Émettre un événement d'erreur
+            self.event_queue.emit(Event(
+                type=EventType.CHAT_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "error": str(e)
+                }
+            ))
+    
+    async def _handle_chat_request_async(self, event: Event):
+        """
+        Gestionnaire asynchrone pour les requêtes de chat.
+        
+        Args:
+            event: Événement de requête
+        """
+        # Vérifier si cet événement est pour ce fournisseur
+        if event.data.get("provider") != "claude":
+            return
+        
+        # Extraire les données
+        request_id = event.data.get("request_id")
+        messages_data = event.data.get("messages", [])
+        config_data = event.data.get("config", {})
+        tools_data = event.data.get("tools", [])
+        stream = event.data.get("stream", False)
+        
+        # Convertir les messages au format Claude
+        claude_messages = self._convert_messages_to_claude(messages_data)
+        
+        # Extraire les paramètres de configuration
+        model = config_data.get("model_name", "claude-3-sonnet-20240229")
+        temperature = config_data.get("temperature", 0.7)
+        max_tokens = config_data.get("max_tokens", 4096)
+        
+        # Convertir les outils au format Claude
+        claude_tools = self._convert_tools_to_claude(tools_data) if tools_data else None
+        
+        try:
+            if stream:
+                # Faire la requête de streaming à Claude
+                async with self.async_client.messages.stream(
+                    model=model,
+                    messages=claude_messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    tools=claude_tools
+                ) as stream:
+                    async for chunk in stream:
+                        if chunk.type == "content_block_delta" and chunk.delta.type == "text":
+                            # Émettre un événement de fragment
+                            await self.event_queue.emit_async(Event(
+                                type=EventType.CHAT_FRAGMENT,
+                                source=self.provider_id,
+                                data={
+                                    "request_id": request_id,
+                                    "fragment": chunk.delta.text
+                                }
+                            ))
+                
+                # Émettre un événement de fin de streaming
+                await self.event_queue.emit_async(Event(
+                    type=EventType.CHAT_COMPLETE,
+                    source=self.provider_id,
+                    data={
+                        "request_id": request_id,
+                        "completed": True
+                    }
+                ))
+            
+            else:
+                # Faire la requête asynchrone à Claude
+                response = await self.async_client.messages.create(
+                    model=model,
+                    messages=claude_messages,
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    tools=claude_tools
+                )
+                
+                # Extraire la réponse
+                response_text = ""
+                for content_block in response.content:
+                    if content_block.type == "text":
+                        response_text += content_block.text
+                
+                # Émettre un événement de réponse
+                await self.event_queue.emit_async(Event(
+                    type=EventType.CHAT_RESPONSE,
+                    source=self.provider_id,
+                    data={
+                        "request_id": request_id,
+                        "response": response_text
+                    }
+                ))
+        
+        except Exception as e:
+            # Émettre un événement d'erreur
+            await self.event_queue.emit_async(Event(
+                type=EventType.CHAT_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "error": str(e)
+                }
+            ))
+    
+    def _handle_embed_request(self, event: Event):
+        """
+        Gestionnaire synchrone pour les requêtes d'embedding.
+        
+        Args:
+            event: Événement de requête
+        """
+        # Vérifier si cet événement est pour ce fournisseur
+        if event.data.get("provider") != "claude":
+            return
+        
+        # Extraire les données
+        request_id = event.data.get("request_id")
+        text = event.data.get("text", "")
+        model_name = event.data.get("model_name", "claude-3-sonnet-20240229")
+        
+        try:
+            # Faire la requête d'embedding à Claude
+            response = self.client.embeddings.create(
+                model=model_name,
+                input=text
+            )
+            
+            # Émettre un événement de réponse
+            self.event_queue.emit(Event(
+                type=EventType.EMBED_RESPONSE,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "embeddings": response.embedding
+                }
+            ))
+        
+        except Exception as e:
+            # Émettre un événement d'erreur
+            self.event_queue.emit(Event(
+                type=EventType.EMBED_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "error": str(e)
+                }
+            ))
+    
+    async def _handle_embed_request_async(self, event: Event):
+        """
+        Gestionnaire asynchrone pour les requêtes d'embedding.
+        
+        Args:
+            event: Événement de requête
+        """
+        # Vérifier si cet événement est pour ce fournisseur
+        if event.data.get("provider") != "claude":
+            return
+        
+        # Extraire les données
+        request_id = event.data.get("request_id")
+        text = event.data.get("text", "")
+        model_name = event.data.get("model_name", "claude-3-sonnet-20240229")
+        
+        try:
+            # Faire la requête d'embedding asynchrone à Claude
+            response = await self.async_client.embeddings.create(
+                model=model_name,
+                input=text
+            )
+            
+            # Émettre un événement de réponse
+            await self.event_queue.emit_async(Event(
+                type=EventType.EMBED_RESPONSE,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "embeddings": response.embedding
+                }
+            ))
+        
+        except Exception as e:
+            # Émettre un événement d'erreur
+            await self.event_queue.emit_async(Event(
+                type=EventType.EMBED_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": request_id,
+                    "error": str(e)
+                }
+            ))
+    
+    def _convert_messages_to_claude(self, messages_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Convertit les messages au format Claude.
+        
+        Args:
+            messages_data: Messages au format UnifiedLLM
+            
+        Returns:
+            Messages au format Claude
+        """
+        claude_messages = []
+        
+        for message_data in messages_data:
+            role = message_data.get("role", "user")
+            content = message_data.get("content", "")
+            file_paths = message_data.get("file_paths", [])
+            tool_call = message_data.get("tool_call")
+            tool_result = message_data.get("tool_result")
+            
+            # Traiter les différents types de messages
+            if role == "system":
+                claude_messages.append({
+                    "role": "system",
+                    "content": content
+                })
+            
+            elif role == "user":
+                # Créer un contenu Claude avec texte et éventuellement fichiers
+                claude_content = []
+                
+                if content:
+                    claude_content.append({
+                        "type": "text",
+                        "text": content
+                    })
+                
+                # Ajouter les fichiers (simulé ici)
+                for file_path in file_paths:
+                    # Dans une vraie implémentation, il faudrait ouvrir le fichier
+                    # et déterminer le type MIME
+                    claude_content.append({
+                        "type": "image",  # ou autre type selon le fichier
+                        "source": {
+                            "type": "base64",
+                            "media_type": "image/jpeg",  # à déterminer selon le fichier
+                            "data": "base64_encoded_data_here"  # à encoder depuis le fichier
+                        }
+                    })
+                
+                claude_messages.append({
+                    "role": "user",
+                    "content": claude_content
+                })
+            
+            elif role == "assistant":
+                if tool_call:
+                    # Message d'appel d'outil
+                    claude_messages.append({
+                        "role": "assistant",
+                        "content": [{
+                            "type": "tool_use",
+                            "id": tool_call.get("id", str(uuid.uuid4())),
+                            "name": tool_call.get("name", ""),
+                            "input": tool_call.get("arguments", {})
+                        }]
+                    })
+                else:
+                    # Message texte standard
+                    claude_messages.append({
+                        "role": "assistant",
+                        "content": content
+                    })
+            
+            elif role == "tool":
+                if tool_result:
+                    # Message de résultat d'outil
+                    claude_messages.append({
+                        "role": "tool",
+                        "content": tool_result.get("content", ""),
+                        "tool_call_id": tool_result.get("tool_call_id", "")
+                    })
+        
+        return claude_messages
+    
+    def _convert_tools_to_claude(self, tools_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        """
+        Convertit les outils au format Claude.
+        
+        Args:
+            tools_data: Outils au format UnifiedLLM
+            
+        Returns:
+            Outils au format Claude
+        """
+        claude_tools = []
+        
+        for tool_data in tools_data:
+            name = tool_data.get("name", "")
+            description = tool_data.get("description", "")
+            parameters = tool_data.get("parameters", {})
+            
+            claude_tools.append({
+                "type": "function",
+                "function": {
+                    "name": name,
+                    "description": description,
+                    "parameters": parameters
+                }
+            })
+        
+        return claude_tools
+    
+    def __del__(self):
+        """Nettoyage lors de la destruction de l'objet."""
+        # Désenregistrer tous les gestionnaires de cet abonné
+        self.event_queue.unregister_subscriber(self.provider_id)
+
+
+class LMStudioEventProvider:
+    """
+    Fournisseur LMStudio basé sur architecture événementielle.
+    S'abonne aux événements et répond aux requêtes.
+    """
+    
+    def __init__(self, api_url: Optional[str] = None, api_key: Optional[str] = None, 
+                provider_id: str = "lmstudio_provider"):
+        """
+        Initialise le fournisseur LMStudio.
+        
+        Args:
+            api_url: URL de l'API LMStudio (optionnel, pour serveur distant)
+            api_key: Clé API LMStudio (optionnel, pour serveur distant)
+            provider_id: Identifiant unique pour ce fournisseur
+        """
+        try:
+            import lmstudio
+            self.lmstudio_available = True
+        except ImportError:
+            self.lmstudio_available = False
+        
+        self.provider_id = provider_id
+        self.api_url = api_url
+        self.api_key = api_key
+        
+        # État interne
+        self.models = {}
+        
+        # Obtenir la file d'événements
+        self.event_queue = get_event_queue()
+        
+        # Si LMStudio est disponible, initialiser les modèles
+        if self.lmstudio_available:
+            self._init_lmstudio_models()
+        
+        # Enregistrer les gestionnaires d'événements
+        self._register_event_handlers()
+        
+        # Émettre un événement d'initialisation
+        self.event_queue.emit(Event(
+            type=EventType.LOG_INFO,
+            source=self.provider_id,
+            data={"message": "LMStudio provider initialized"}
+        ))
+    
+    def _init_lmstudio_models(self):
+        """Initialise les modèles LMStudio disponibles."""
+        try:
+            import lmstudio
+            
+            # Simuler les modèles disponibles
+            # Dans une vraie implémentation, on interrogerait l'API LMStudio
+            self.models = {
+                "qwen2.5-7b-instruct-1m": {
+                    "model_key": "qwen2.5-7b-instruct-1m",
+                    "instance": None,  # Sera chargé à la demande
+                    "type": "llm",
+                    "vision": False,
+                    "max_tokens": 8192
+                },
+                "llama3-8b-instruct": {
+                    "model_key": "llama3-8b-instruct",
+                    "instance": None,  # Sera chargé à la demande
+                    "type": "llm",
+                    "vision": False,
+                    "max_tokens": 4096
+                }
+            }
+        except Exception as e:
+            self.event_queue.emit(Event(
+                type=EventType.LOG_ERROR,
+                source=self.provider_id,
+                data={"error": f"Failed to initialize LMStudio models: {str(e)}"}
+            ))
+    
+    def _register_event_handlers(self):
+        """Enregistre les gestionnaires d'événements."""
+        # Gestionnaire pour les requêtes de chat
+        self.event_queue.register_handler(
+            EventType.CHAT_REQUEST,
+            self._handle_chat_request,
+            self.provider_id
+        )
+        
+        # Gestionnaire pour les requêtes d'embedding
+        self.event_queue.register_handler(
+            EventType.EMBED_REQUEST,
+            self._handle_embed_request,
+            self.provider_id
+        )
+        
+        # Gestionnaires asynchrones
+        self.event_queue.register_async_handler(
+            EventType.CHAT_REQUEST,
+            self._handle_chat_request_async,
+            self.provider_id
+        )
+        
+        self.event_queue.register_async_handler(
+            EventType.EMBED_REQUEST,
+            self._handle_embed_request_async,
+            self.provider_id
+        )
+    
+    def _handle_chat_request(self, event: Event):
+        """
+        Gestionnaire synchrone pour les requêtes de chat.
+        
+        Args:
+            event: Événement de requête
+        """
+        # Vérifier si cet événement est pour ce fournisseur
+        if event.data.get("provider") != "lmstudio":
+            return
+        
+        # Vérifier si LMStudio est disponible
+        if not self.lmstudio_available:
+            self.event_queue.emit(Event(
+                type=EventType.CHAT_ERROR,
+                source=self.provider_id,
+                data={
+                    "request_id": event.data.get("request_id"),
+                    "error": "LMStudio not available"
+                }
+            ))
+            return
+        
+        # Extraire les données
+        request_id = event.data.get("request_id")
+        messages_data = event.data.get("messages", [])
+        config_data = event.data.get("config", {})
+        tools_data = event.data.get("tools", [])
+        stream = event.data.get("stream", False)
+        
+        # Extraire les paramètres de configuration
+        model_name = config_data.get("model_name", "qwen2.5-7b-instruct-1m")
+        temperature = config_data.get("temperature", 0.7)
+        max_tokens = config_data.get("max_tokens", 4096)
+        
+        try:
+            # Simuler la réponse LMStudio (dans une vraie implémentation, on appellerait l'API)
+            import time
+            import random
+            
+            if stream:
+                # Simulation de streaming
+                fragments = [
+                    "Dans l'architecture événementielle, ",
+                    "les composants communiquent en émettant et en recevant des événements. ",
+                    "Cela permet un découplage fort entre les différentes parties du système, ",
+                    "car chaque composant peut fonctionner indépendamment et réagir aux événements ",
+                    "sans connaître la source exacte de ces événements.\n\n",
+                    "Cette approche est similaire au modèle de Windows 3.11, ",
+                    "où les applications communiquaient via une boucle de message centrale, ",
+                    "traitant des événements comme les clics de souris, ",
+                    "les frappes au clavier, etc."
+                ]
+                
+                for fragment in fragments:
+                    # Émettre un événement de fragment
+                    self.event_queue.emit(Event(
+                        type=EventType.CHAT_FRAGMENT,
+                        source=self.provider_id,
+                        data={
+                            "request_id": request_id,
+                            "fragment": fragment
+                        }
+                    ))
+                    time.sleep(0.2)  # Simuler une latence
+                
+                # Émettre un événement de fin de streaming
+                self.event_queue.emit(Event(
+                    type=EventType.CHAT_COMPLETE,
+                    source=self.provider_id,
+                    data={
+                        "request_id": request_id,
+                        "completed": True
+                
